@@ -54,3 +54,17 @@ The site builds to `./dist/` and is served as static assets on Cloudflare Worker
 yarn build
 yarn deploy
 ```
+
+Authenticate once with `npx wrangler login`, or set `CLOUDFLARE_API_TOKEN` for CI.
+
+### Workers Builds (GitHub CI)
+
+Connect the repo in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages):
+
+1. **Create application** → **Import a repository** → select `Harsh09889/hospitalbagchecklist`
+2. Worker name: `hospital-bag-checklist` (must match `wrangler.jsonc`)
+3. Production branch: `main`
+4. Build command: `yarn build`
+5. Deploy command: `yarn deploy`
+
+After the first successful deploy, custom domains (`babyhospitalbag.com`, `www.babyhospitalbag.com`) are configured in `wrangler.jsonc` and applied on the next production deploy.
