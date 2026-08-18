@@ -1,0 +1,232 @@
+---
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle';
+import { NAV_ITEMS, PRIMARY_CTA } from '../../config/site';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const isCurrent = (href: string) => href === currentPath;
+const isInGroup = (item: (typeof NAV_ITEMS)[number]) =>
+  isCurrent(item.href) || (item.children ?? []).some((child) => isCurrent(child.href));
+
+const navLinkBase =
+  'inline-flex min-h-11 items-center gap-1.5 rounded-full px-3.5 text-sm font-medium transition-colors hover:bg-surface-soft hover:text-ink';
+const mobileLinkBase =
+  'block rounded-2xl px-2 py-2.5 text-base font-medium transition-colors hover:bg-surface-soft hover:text-ink';
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-hairline/70 bg-canvas/85 backdrop-blur-md no-print"
+  data-site-header
+>
+  <div class="container-page flex h-[68px] items-center justify-between gap-4">
+    <a href="/" class="rounded-full" aria-label="Hospital Bag Checklist — home">
+      <Logo />
+    </a>
+
+    <nav class="hidden items-center gap-0.5 lg:flex" aria-label="Main">
+      {
+        NAV_ITEMS.map((item) =>
+          item.children ? (
+            <div class="relative" data-dropdown>
+              <button
+                type="button"
+                class={`${navLinkBase} ${isInGroup(item) ? 'text-ink' : 'text-body'}`}
+                aria-expanded="false"
+                aria-haspopup="true"
+                data-dropdown-trigger
+              >
+                {item.label}
+                <svg
+                  width="10"
+                  height="6"
+                  viewBox="0 0 10 6"
+                  fill="none"
+                  aria-hidden="true"
+                  class="transition-transform duration-200"
+                  data-dropdown-chevron
+                >
+                  <path
+                    d="m1 1 4 4 4-4"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+
+              <div class="absolute left-0 top-full hidden w-[19rem] pt-2" data-dropdown-panel>
+                <ul class="card overflow-hidden p-2" style="box-shadow: var(--shadow-clay);">
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block rounded-2xl px-3.5 py-2.5 transition-colors hover:bg-surface-soft"
+                        aria-current={isCurrent(child.href) ? 'page' : undefined}
+                      >
+                        <span class="block text-sm font-semibold text-ink">{child.label}</span>
+                        <span class="mt-0.5 block text-xs leading-snug text-muted">
+                          {child.description}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={item.href}
+              class={`${navLinkBase} ${isCurrent(item.href) ? 'text-ink' : 'text-body'}`}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ),
+        )
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={PRIMARY_CTA.href} class="btn-primary hidden sm:inline-flex">
+        {PRIMARY_CTA.label}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+
+      <ThemeToggle client:load />
+
+      <button
+        type="button"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-surface-soft lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-trigger
+      >
+        <span class="sr-only" data-menu-label>Open menu</span>
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true">
+          <path
+            d="M1 1h18M1 7h18M1 13h18"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-hairline bg-canvas lg:hidden" data-menu-panel>
+    <nav class="container-page py-5" aria-label="Mobile">
+      <ul>
+        {
+          NAV_ITEMS.map((item) => (
+            <li>
+              {item.children ? (
+                <>
+                  <p class="px-2 pb-1 pt-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-soft">
+                    {item.label}
+                  </p>
+                  <ul>
+                    {item.children.map((child) => (
+                      <li>
+                        <a
+                          href={child.href}
+                          class={`${mobileLinkBase} ${isCurrent(child.href) ? 'text-ink' : 'text-body'}`}
+                          aria-current={isCurrent(child.href) ? 'page' : undefined}
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <a
+                  href={item.href}
+                  class={`${mobileLinkBase} ${isCurrent(item.href) ? 'text-ink' : 'text-body'}`}
+                  aria-current={isCurrent(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-6 flex items-center justify-between rounded-2xl bg-surface-soft px-4 py-3">
+        <span class="text-sm font-medium text-body">Appearance</span>
+        <ThemeToggle client:load />
+      </div>
+
+      <a href={PRIMARY_CTA.href} class="btn-primary mt-6 w-full">
+        {PRIMARY_CTA.label}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-site-header]');
+
+  if (header) {
+    const menuTrigger = header.querySelector<HTMLButtonElement>('[data-menu-trigger]');
+    const menuPanel = header.querySelector<HTMLElement>('[data-menu-panel]');
+    const menuLabel = header.querySelector<HTMLElement>('[data-menu-label]');
+
+    const setMenu = (open: boolean) => {
+      if (!menuTrigger || !menuPanel) return;
+      menuTrigger.setAttribute('aria-expanded', String(open));
+      menuPanel.classList.toggle('hidden', !open);
+      if (menuLabel) menuLabel.textContent = open ? 'Close menu' : 'Open menu';
+    };
+
+    menuTrigger?.addEventListener('click', () => {
+      setMenu(menuTrigger.getAttribute('aria-expanded') !== 'true');
+    });
+
+    const dropdowns = Array.from(header.querySelectorAll<HTMLElement>('[data-dropdown]'));
+
+    const setDropdown = (dropdown: HTMLElement, open: boolean) => {
+      dropdown
+        .querySelector('[data-dropdown-trigger]')
+        ?.setAttribute('aria-expanded', String(open));
+      dropdown.querySelector('[data-dropdown-panel]')?.classList.toggle('hidden', !open);
+      dropdown.querySelector('[data-dropdown-chevron]')?.classList.toggle('rotate-180', open);
+    };
+
+    const closeAll = (except?: HTMLElement) => {
+      for (const dropdown of dropdowns) {
+        if (dropdown !== except) setDropdown(dropdown, false);
+      }
+    };
+
+    for (const dropdown of dropdowns) {
+      const trigger = dropdown.querySelector<HTMLButtonElement>('[data-dropdown-trigger]');
+      trigger?.addEventListener('click', () => {
+        const open = trigger.getAttribute('aria-expanded') !== 'true';
+        closeAll(dropdown);
+        setDropdown(dropdown, open);
+      });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      closeAll();
+      setMenu(false);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!header.contains(event.target as Node)) {
+        closeAll();
+        setMenu(false);
+      }
+    });
+  }
+</script>

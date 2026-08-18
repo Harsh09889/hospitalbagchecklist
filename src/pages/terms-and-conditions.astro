@@ -1,0 +1,74 @@
+---
+import LegalPage from '../layouts/LegalPage.astro';
+import { MEDICAL_DISCLAIMER } from '../config/site';
+import { LEGAL_LINKS, LEGAL_UPDATED, TERMS_LEAD } from '../data/content/legal-pages';
+---
+
+<LegalPage routeKey="terms" h1="Terms &amp; Conditions" lead={TERMS_LEAD} updated={LEGAL_UPDATED}>
+  <h2>Agreement</h2>
+  <p>
+    By accessing or using Hospital Bag Checklist, you agree to these Terms &amp; Conditions. If you
+    do not agree, please do not use the site.
+  </p>
+
+  <h2>What we provide</h2>
+  <p>
+    We provide free informational content and a browser-based checklist tool to help expecting
+    parents prepare hospital bags. The service is provided &ldquo;as is&rdquo; and may change or be
+    discontinued at any time without notice.
+  </p>
+
+  <h2>Not medical advice</h2>
+  <p>
+    <strong>Medical disclaimer.</strong> {MEDICAL_DISCLAIMER}
+  </p>
+  <p>
+    Always consult your doctor, midwife or hospital team for advice specific to your pregnancy,
+    delivery plan and recovery.
+  </p>
+
+  <h2>Accuracy of information</h2>
+  <p>
+    We work to keep our checklists accurate and helpful, but we cannot guarantee that every item or
+    suggestion applies to your situation or hospital. You are responsible for verifying what you
+    need with your healthcare provider.
+  </p>
+
+  <h2>Acceptable use</h2>
+  <p>You agree not to:</p>
+  <ul>
+    <li>Use the site for any unlawful purpose.</li>
+    <li>Attempt to disrupt, damage or gain unauthorised access to the site or its infrastructure.</li>
+    <li>Scrape, copy or republish substantial portions of the site without permission.</li>
+    <li>Misrepresent your affiliation with Hospital Bag Checklist.</li>
+  </ul>
+
+  <h2>Intellectual property</h2>
+  <p>
+    The content, design, illustrations and code on this site are owned by Hospital Bag Checklist
+    unless otherwise noted. You may print or download checklists for personal, non-commercial use.
+  </p>
+
+  <h2>Limitation of liability</h2>
+  <p>
+    To the fullest extent permitted by law, Hospital Bag Checklist and its operators shall not be
+    liable for any indirect, incidental or consequential damages arising from your use of the site
+    or reliance on its content.
+  </p>
+
+  <h2>Privacy</h2>
+  <p>
+    Your use of the site is also governed by our <a href={LEGAL_LINKS.privacy}>Privacy Policy</a>.
+  </p>
+
+  <h2>Changes to these terms</h2>
+  <p>
+    We may update these terms from time to time. Continued use of the site after changes are posted
+    constitutes acceptance of the revised terms.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about these terms? Visit our <a href={LEGAL_LINKS.contact}>Contact Us</a> page.
+  </p>
+</LegalPage>

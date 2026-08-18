@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /checklist
+Disallow: /404
+Disallow: /500
+
+Sitemap: https://babyhospitalbag.com/sitemap.xml
+Sitemap: https://babyhospitalbag.com/sitemap-index.xml

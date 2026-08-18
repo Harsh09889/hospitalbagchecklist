@@ -1,0 +1,81 @@
+---
+import { getImage } from 'astro:assets';
+import heroImage from '../../assets/hero-hospital-bag.jpg';
+import { SITE, absoluteUrl } from '../../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path with no trailing slash, e.g. `/hospital-bag-checklist-for-mom`. */
+  path: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  /** Target keywords for `<meta name="keywords">`. */
+  keywords?: string[];
+  /** Serialized JSON-LD @graph for this page. */
+  jsonLd?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  ogType = 'website',
+  noindex = false,
+  keywords,
+  jsonLd,
+} = Astro.props;
+
+const canonical = absoluteUrl(path);
+
+// Derived at build time from the hero artwork, so there is no separate asset to maintain.
+const ogImage = await getImage({
+  src: heroImage,
+  width: 1200,
+  height: 630,
+  format: 'jpg',
+  quality: 78,
+  fit: 'cover',
+  position: 'center',
+});
+const ogImageUrl = new URL(ogImage.src, SITE.url).href;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{keywords && keywords.length > 0 && (
+  <meta name="keywords" content={keywords.join(', ')} />
+)}
+<link rel="canonical" href={canonical} />
+
+{
+  noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  )
+}
+
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta
+  property="og:image:alt"
+  content="A hospital bag packed with baby clothes, a bottle and a checklist"
+/>
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={SITE.twitter} />
+<meta name="twitter:creator" content={SITE.twitter} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
+{jsonLd && <script type="application/ld+json" is:inline set:html={jsonLd} />}

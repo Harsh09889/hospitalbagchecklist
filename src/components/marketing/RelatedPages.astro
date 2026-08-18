@@ -1,0 +1,46 @@
+---
+import { ROUTES, type RouteKey } from '../../config/site';
+import { accentAt } from '../../lib/accents';
+
+interface Props {
+  keys: RouteKey[];
+  title?: string;
+  eyebrow?: string;
+}
+
+const { keys, title = 'Keep reading', eyebrow = 'More checklists' } = Astro.props;
+---
+
+<section class="section-tight no-print">
+  <div class="container-page">
+    <span class="eyebrow">{eyebrow}</span>
+    <h2 class="display-lg mt-3">{title}</h2>
+
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        keys.map((key, index) => {
+          const route = ROUTES[key];
+          const accent = accentAt(index);
+          return (
+            <li>
+              <a
+                href={route.path}
+                class="card reveal flex h-full flex-col p-6 transition-shadow duration-200 hover:shadow-[var(--shadow-clay)]"
+              >
+                <span class={`h-1.5 w-10 rounded-full ${accent.dot}`} aria-hidden="true"></span>
+                <span class="mt-4 font-display text-lg font-medium text-ink">{route.label}</span>
+                <span class="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                  {route.description}
+                </span>
+                <span class="link-arrow mt-5">
+                  Read the guide
+                  <span aria-hidden="true">&rarr;</span>
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>

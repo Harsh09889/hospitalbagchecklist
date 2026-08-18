@@ -1,0 +1,48 @@
+---
+import LegalPage from '../layouts/LegalPage.astro';
+import { CONTACT_EMAIL, ROUTES } from '../config/site';
+import { CONTACT_LEAD, LEGAL_LINKS, LEGAL_UPDATED } from '../data/content/legal-pages';
+---
+
+<LegalPage routeKey="contact" h1="Contact Us" lead={CONTACT_LEAD} updated={LEGAL_UPDATED}>
+  <h2>Email us</h2>
+  <p>
+    The fastest way to reach us is by email. We read every message and aim to reply within
+    <strong>5–7 business days</strong>.
+  </p>
+  <p>
+    <a href={`mailto:${CONTACT_EMAIL}`} class="btn-primary inline-flex no-underline">
+      {CONTACT_EMAIL}
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+  </p>
+
+  <h2>What to contact us about</h2>
+  <ul>
+    <li>Feedback on the checklist tool or website</li>
+    <li>Suggestions for items we should add or clarify</li>
+    <li>Corrections to content that may be outdated</li>
+    <li>Privacy questions or data requests — see also our <a href={LEGAL_LINKS.privacy}>Privacy Policy</a></li>
+    <li>Questions about these <a href={LEGAL_LINKS.terms}>Terms &amp; Conditions</a></li>
+  </ul>
+
+  <h2>Before you write</h2>
+  <p>
+    For packing questions, your midwife, doctor or maternity unit is the best source of advice —
+    every hospital is different. Our site is a general guide, not personalised medical care.
+  </p>
+  <p>
+    You may find a quick answer on our homepage <a href={LEGAL_LINKS.faq}>FAQ section</a> or in
+    one of the dedicated checklists below.
+  </p>
+
+  <h2>Helpful links</h2>
+  <ul>
+    <li><a href={ROUTES.home.path}>Hospital bag checklist — homepage</a></li>
+    <li><a href={ROUTES.mom.path}>Checklist for mom</a></li>
+    <li><a href={ROUTES.baby.path}>Checklist for baby</a></li>
+    <li><a href={ROUTES.dad.path}>Checklist for dad</a></li>
+    <li><a href={ROUTES.generator.path}>Create my personalised checklist</a></li>
+    <li><a href={LEGAL_LINKS.about}>About us</a></li>
+  </ul>
+</LegalPage>

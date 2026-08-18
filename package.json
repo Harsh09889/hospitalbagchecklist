@@ -1,0 +1,37 @@
+{
+  "name": "hospital-bag-checklist",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && cp dist/sitemap-index.xml dist/sitemap.xml",
+    "preview": "astro preview",
+    "deploy": "wrangler deploy",
+    "deploy:dry-run": "wrangler deploy --dry-run",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/outfit": "^5.3.0",
+    "@nanostores/react": "^1.1.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.2",
+    "jspdf": "^4.2.1",
+    "nanostores": "^1.5.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.3"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "wrangler": "^4.0.0"
+  }
+}

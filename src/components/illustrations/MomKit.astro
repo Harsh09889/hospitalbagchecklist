@@ -1,0 +1,109 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const uid = 'mom';
+---
+
+<svg
+  viewBox="0 0 400 300"
+  fill="none"
+  role="img"
+  aria-label="A clay toiletry pouch, a folded stack of soft clothes, slippers and a water bottle"
+  class={className}
+>
+  <defs>
+    <linearGradient id={`${uid}-pouch`} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#cdc0f2" />
+      <stop offset="1" stop-color="#9d88d8" />
+    </linearGradient>
+    <linearGradient id={`${uid}-bottle`} x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#b8dcf1" />
+      <stop offset="1" stop-color="#7db4d9" />
+    </linearGradient>
+    <linearGradient id={`${uid}-slipper`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#a8dfc9" />
+      <stop offset="1" stop-color="#71bfa4" />
+    </linearGradient>
+    <linearGradient id={`${uid}-fold-a`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#fffdf8" />
+      <stop offset="1" stop-color="#e7e1cf" />
+    </linearGradient>
+    <linearGradient id={`${uid}-fold-b`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f9b3a3" />
+      <stop offset="1" stop-color="#e5806a" />
+    </linearGradient>
+    <linearGradient id={`${uid}-fold-c`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#ffe3ad" />
+      <stop offset="1" stop-color="#eec25a" />
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="268" rx="158" ry="20" fill="#1c1b18" opacity="0.06" />
+
+  <!-- Folded stack of soft clothes -->
+  <g>
+    <rect x="132" y="82" width="140" height="30" rx="14" fill={`url(#${uid}-fold-c)`} />
+    <path d="M158 97h44" stroke="#b98f1c" stroke-width="4" stroke-linecap="round" opacity="0.35" />
+
+    <rect x="126" y="116" width="152" height="32" rx="15" fill={`url(#${uid}-fold-b)`} />
+    <path d="M154 132h52" stroke="#b8523c" stroke-width="4" stroke-linecap="round" opacity="0.4" />
+
+    <rect x="134" y="152" width="136" height="30" rx="14" fill={`url(#${uid}-fold-a)`} />
+    <path d="M160 167h48" stroke="#b6ae97" stroke-width="4" stroke-linecap="round" opacity="0.5" />
+  </g>
+
+  <!-- Toiletry pouch, clearly separated on the left -->
+  <g>
+    <rect x="28" y="152" width="118" height="82" rx="30" fill={`url(#${uid}-pouch)`} />
+    <path d="M42 178h90" stroke="#65499f" stroke-width="7" stroke-linecap="round" opacity="0.5" />
+    <circle cx="132" cy="178" r="8" fill="#fffdf8" opacity="0.9" />
+    <rect x="44" y="198" width="40" height="12" rx="6" fill="#fffdf8" opacity="0.4" />
+  </g>
+
+  <!-- Water bottle -->
+  <g>
+    <rect x="300" y="132" width="48" height="102" rx="22" fill={`url(#${uid}-bottle)`} />
+    <rect x="312" y="112" width="24" height="24" rx="10" fill="#5d9bc4" />
+    <rect x="310" y="150" width="11" height="56" rx="5.5" fill="#fffdf8" opacity="0.5" />
+  </g>
+
+  <!-- Slippers on the ground, offset from the pouch -->
+  <g>
+    <path
+      d="M168 234c0-11 11-18 24-18s24 7 24 18-11 20-24 20-24-9-24-20Z"
+      fill={`url(#${uid}-slipper)`}
+    />
+    <path
+      d="M180 231c4-5 20-5 24 0"
+      stroke="#fffdf8"
+      stroke-width="5"
+      stroke-linecap="round"
+      opacity="0.75"
+      fill="none"
+    />
+    <path
+      d="M226 240c0-11 11-18 24-18s24 7 24 18-11 20-24 20-24-9-24-20Z"
+      fill={`url(#${uid}-slipper)`}
+    />
+    <path
+      d="M238 237c4-5 20-5 24 0"
+      stroke="#fffdf8"
+      stroke-width="5"
+      stroke-linecap="round"
+      opacity="0.75"
+      fill="none"
+    />
+  </g>
+
+  <!-- Floating props -->
+  <circle cx="70" cy="98" r="14" fill="#f7cf72" />
+  <circle cx="332" cy="70" r="9" fill="#f2a2b8" />
+  <path
+    d="M92 128c0-8 6-14 14-14s14 6 14 14-14 19-14 19-14-11-14-19Z"
+    fill="#f4907c"
+    opacity="0.9"
+  />
+</svg>

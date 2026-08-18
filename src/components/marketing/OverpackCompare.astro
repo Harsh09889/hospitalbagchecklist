@@ -1,0 +1,71 @@
+---
+import { MUST_PACK, NICE_TO_HAVE } from '../../data/content/checklists';
+import OverpackedBag from '../illustrations/OverpackedBag.astro';
+import TidyBag from '../illustrations/TidyBag.astro';
+---
+
+<div class="grid gap-4 md:grid-cols-2">
+  <div class="card reveal flex flex-col p-6 sm:p-8">
+    <div class="flex items-center gap-3">
+      <span class="h-3 w-3 rounded-full bg-brand-coral" aria-hidden="true"></span>
+      <h3 class="font-display text-xl font-medium text-ink">Must pack</h3>
+    </div>
+    <p class="mt-2 text-sm text-muted">
+      If you only have ten minutes, pack these. Everything here is difficult to do without or
+      awkward to replace once you are at the hospital.
+    </p>
+
+    <ul class="mt-6 flex-1 space-y-2.5 border-t border-hairline pt-6">
+      {
+        MUST_PACK.map((item) => (
+          <li class="flex items-start gap-3 text-[0.9375rem] text-body-strong">
+            <span
+              class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-coral"
+              aria-hidden="true"
+            >
+              <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+                <path
+                  d="m1.4 4.6 2.8 2.8L9.6 1.6"
+                  stroke="var(--color-on-coral)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+
+    <TidyBag class="mt-8 h-32 w-full opacity-90" />
+  </div>
+
+  <div class="card reveal flex flex-col p-6 sm:p-8">
+    <div class="flex items-center gap-3">
+      <span class="h-3 w-3 rounded-full bg-brand-butter" aria-hidden="true"></span>
+      <h3 class="font-display text-xl font-medium text-ink">Nice to have</h3>
+    </div>
+    <p class="mt-2 text-sm text-muted">
+      Genuinely lovely if there is room, but nothing here will make or break your stay. Add them
+      last, and leave them out without guilt.
+    </p>
+
+    <ul class="mt-6 flex-1 space-y-2.5 border-t border-hairline pt-6">
+      {
+        NICE_TO_HAVE.map((item) => (
+          <li class="flex items-start gap-3 text-[0.9375rem] text-body">
+            <span
+              class="mt-[0.35rem] h-2.5 w-2.5 shrink-0 rounded-full border-2 border-brand-butter"
+              aria-hidden="true"
+            />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+
+    <OverpackedBag class="mt-8 h-32 w-full opacity-90" />
+  </div>
+</div>

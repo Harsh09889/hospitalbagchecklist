@@ -1,0 +1,85 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const uid = 'printable';
+---
+
+<svg
+  viewBox="0 0 400 300"
+  fill="none"
+  role="img"
+  aria-label="A clay clipboard checklist beside a printer sheet"
+  class={className}
+>
+  <defs>
+    <linearGradient id={`${uid}-board`} x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffe3ad" />
+      <stop offset="1" stop-color="#e8bd57" />
+    </linearGradient>
+    <linearGradient id={`${uid}-paper`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#fffdf8" />
+      <stop offset="1" stop-color="#ece6d6" />
+    </linearGradient>
+    <linearGradient id={`${uid}-printer`} x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#a8c9e0" />
+      <stop offset="1" stop-color="#5c88a8" />
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="268" rx="158" ry="22" fill="#1c1b18" opacity="0.06" />
+
+  <!-- Printer -->
+  <g>
+    <rect x="216" y="168" width="146" height="80" rx="28" fill={`url(#${uid}-printer)`} />
+    <rect x="240" y="216" width="98" height="16" rx="8" fill="#fffdf8" opacity="0.4" />
+    <circle cx="336" cy="192" r="8" fill="#8fd3bd" />
+    <!-- Emerging sheet -->
+    <rect x="248" y="112" width="82" height="66" rx="14" fill={`url(#${uid}-paper)`} />
+    <path
+      d="M264 134h50M264 150h50M264 166h32"
+      stroke="#9ecbe8"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Clipboard -->
+  <g transform="rotate(-6 118 156)">
+    <rect x="42" y="84" width="152" height="164" rx="26" fill={`url(#${uid}-board)`} />
+    <rect x="58" y="102" width="120" height="130" rx="16" fill={`url(#${uid}-paper)`} />
+    <rect x="94" y="70" width="48" height="26" rx="12" fill="#cf9426" />
+
+    <!-- Checked rows -->
+    <rect x="72" y="120" width="18" height="18" rx="6" fill="#8fd3bd" />
+    <path
+      d="m76.5 129 3.5 3.6 5.5-6"
+      stroke="#0e4034"
+      stroke-width="2.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <rect x="98" y="125" width="62" height="8" rx="4" fill="#c9c2ad" />
+
+    <rect x="72" y="150" width="18" height="18" rx="6" fill="#8fd3bd" />
+    <path
+      d="m76.5 159 3.5 3.6 5.5-6"
+      stroke="#0e4034"
+      stroke-width="2.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <rect x="98" y="155" width="52" height="8" rx="4" fill="#c9c2ad" />
+
+    <rect x="72" y="180" width="18" height="18" rx="6" fill="none" stroke="#c9c2ad" stroke-width="3" />
+    <rect x="98" y="185" width="58" height="8" rx="4" fill="#dbd5c2" />
+
+    <rect x="72" y="210" width="18" height="18" rx="6" fill="none" stroke="#c9c2ad" stroke-width="3" />
+    <rect x="98" y="215" width="44" height="8" rx="4" fill="#dbd5c2" />
+  </g>
+
+  <circle cx="228" cy="82" r="12" fill="#f4907c" />
+  <circle cx="358" cy="120" r="9" fill="#b9a8e8" />
+</svg>

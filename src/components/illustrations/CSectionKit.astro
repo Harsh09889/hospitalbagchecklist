@@ -1,0 +1,93 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const uid = 'csection';
+---
+
+<svg
+  viewBox="0 0 400 300"
+  fill="none"
+  role="img"
+  aria-label="Two neatly organised clay bags with loose comfortable clothing folded on top"
+  class={className}
+>
+  <defs>
+    <linearGradient id={`${uid}-bagA`} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#cdc0f2" />
+      <stop offset="1" stop-color="#9382d0" />
+    </linearGradient>
+    <linearGradient id={`${uid}-bagB`} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#a8dfc9" />
+      <stop offset="1" stop-color="#649f88" />
+    </linearGradient>
+    <linearGradient id={`${uid}-cloth`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#fffdf8" />
+      <stop offset="1" stop-color="#e3ddcb" />
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="266" rx="158" ry="22" fill="#1c1b18" opacity="0.06" />
+
+  <!-- Bag one -->
+  <g>
+    <rect x="46" y="150" width="140" height="98" rx="34" fill={`url(#${uid}-bagA)`} />
+    <path
+      d="M92 150c0-14 11-24 24-24s24 10 24 24"
+      stroke="#6d55ab"
+      stroke-width="11"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <rect x="66" y="182" width="100" height="20" rx="10" fill="#fffdf8" opacity="0.45" />
+    <text
+      x="116"
+      y="228"
+      text-anchor="middle"
+      font-family="system-ui, sans-serif"
+      font-size="19"
+      font-weight="700"
+      fill="#fffdf8"
+    >1</text>
+  </g>
+
+  <!-- Bag two -->
+  <g>
+    <rect x="214" y="168" width="140" height="80" rx="30" fill={`url(#${uid}-bagB)`} />
+    <path
+      d="M260 168c0-13 10-22 22-22s22 9 22 22"
+      stroke="#4a806b"
+      stroke-width="11"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <rect x="232" y="194" width="104" height="18" rx="9" fill="#fffdf8" opacity="0.45" />
+    <text
+      x="284"
+      y="238"
+      text-anchor="middle"
+      font-family="system-ui, sans-serif"
+      font-size="19"
+      font-weight="700"
+      fill="#fffdf8"
+    >2</text>
+  </g>
+
+  <!-- Folded loose clothing -->
+  <g>
+    <rect x="132" y="72" width="136" height="34" rx="16" fill={`url(#${uid}-cloth)`} />
+    <rect x="144" y="106" width="112" height="30" rx="14" fill="#f9b3a3" />
+    <path
+      d="M160 121h80"
+      stroke="#c95b45"
+      stroke-width="5"
+      stroke-linecap="round"
+      opacity="0.5"
+    />
+  </g>
+
+  <circle cx="82" cy="98" r="12" fill="#f7cf72" />
+  <circle cx="326" cy="106" r="9" fill="#9ecbe8" />
+</svg>

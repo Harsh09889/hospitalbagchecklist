@@ -1,0 +1,94 @@
+---
+import { ACCENTS } from '../../lib/accents';
+import { PREVIEW_SECTIONS } from '../../data/content/checklists';
+import { PRIMARY_CTA } from '../../config/site';
+
+const total = PREVIEW_SECTIONS.reduce((sum, section) => sum + section.items.length, 0);
+const packed = PREVIEW_SECTIONS.reduce(
+  (sum, section) => sum + section.items.filter((item) => item.checked).length,
+  0,
+);
+const percent = Math.round((packed / total) * 100);
+---
+
+<div class="card-clay overflow-hidden">
+  <!-- Progress header -->
+  <div class="border-b border-hairline bg-surface-soft px-6 py-5 sm:px-8">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <p class="font-display text-lg font-medium text-ink">Your hospital bag checklist</p>
+      <p class="text-sm font-semibold text-ink">{percent}% packed</p>
+    </div>
+    <div
+      class="mt-3 h-2.5 overflow-hidden rounded-full bg-surface-strong"
+      role="img"
+      aria-label={`${packed} of ${total} items packed`}
+    >
+      <div class="h-full rounded-full bg-brand-mint" style={`width: ${percent}%`}></div>
+    </div>
+  </div>
+
+  <!-- Sections -->
+  <div class="divide-y divide-hairline">
+    {
+      PREVIEW_SECTIONS.map((section) => {
+        const accent = ACCENTS[section.accent];
+        return (
+          <div class="px-6 py-6 sm:px-8">
+            <div class="flex items-center gap-2.5">
+              <span class={`h-2.5 w-2.5 rounded-full ${accent.dot}`} aria-hidden="true" />
+              <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                {section.label}
+              </p>
+            </div>
+
+            <ul class="mt-4 space-y-2.5">
+              {section.items.map((item) => (
+                <li class="flex items-center justify-between gap-4">
+                  <span class="flex min-w-0 items-center gap-3">
+                    {item.checked ? (
+                      <span
+                        class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-mint"
+                        aria-hidden="true"
+                      >
+                        <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+                          <path
+                            d="m1.4 4.6 2.8 2.8L9.6 1.6"
+                            stroke="var(--color-on-mint)"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    ) : (
+                      <span
+                        class="inline-block h-5 w-5 shrink-0 rounded-full border-2 border-hairline"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span
+                      class={`truncate text-[0.9375rem] ${item.checked ? 'text-muted line-through decoration-hairline' : 'text-body-strong'}`}
+                    >
+                      {item.name}
+                    </span>
+                  </span>
+                  <span class="shrink-0 text-sm text-muted">{item.qty}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })
+    }
+  </div>
+
+  <div class="border-t border-hairline bg-surface-soft px-6 py-6 sm:px-8">
+    <a href={PRIMARY_CTA.href} class="btn-primary w-full sm:w-auto">
+      {PRIMARY_CTA.label}
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+    <p class="mt-3 text-xs text-muted">
+      A preview of the full checklist. The generator tailors it to your delivery plan and stay.
+    </p>
+  </div>
+</div>

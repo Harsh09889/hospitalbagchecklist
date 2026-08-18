@@ -1,0 +1,51 @@
+---
+import { PRIMARY_CTA, ROUTES } from '../../config/site';
+import Cloud from '../illustrations/Cloud.astro';
+import Hills from '../illustrations/Hills.astro';
+
+interface Props {
+  title?: string;
+  lead?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  title = 'Ready for the big day?',
+  lead = 'Build your hospital bag checklist and know exactly what to pack — for you, your baby and your partner.',
+  secondaryLabel = 'Get the printable version',
+  secondaryHref = ROUTES.pdf.path,
+} = Astro.props;
+---
+
+<section class="section-tight no-print">
+  <div class="container-page">
+    <div
+      class="sky-band relative overflow-hidden px-6 pb-28 pt-16 text-center sm:px-12 sm:pb-32 sm:pt-20"
+    >
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Cloud class="animate-float-slow absolute -left-4 top-[12%] w-28 sm:w-36" />
+        <Cloud class="animate-float absolute right-[6%] top-[8%] w-20 sm:w-24" />
+        <Cloud class="animate-float-delay absolute bottom-[32%] left-[24%] w-16" />
+        <Hills class="absolute inset-x-0 bottom-0 h-24 w-full sm:h-28" />
+      </div>
+
+      <div class="relative mx-auto max-w-2xl">
+        <h2 class="display-xl">{title}</h2>
+        <p class="lead mx-auto mt-5 max-w-xl">{lead}</p>
+
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <a href={PRIMARY_CTA.href} class="btn-primary btn-lg">
+            {PRIMARY_CTA.label}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a href={secondaryHref} class="btn-secondary btn-lg">{secondaryLabel}</a>
+        </div>
+
+        <p class="mt-6 text-sm text-muted">
+          No sign-up. No giant list of things you do not need.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

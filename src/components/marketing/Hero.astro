@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../../assets/hero-hospital-bag.jpg';
+import { PRIMARY_CTA, ROUTES } from '../../config/site';
+---
+
+<section class="sky-wash relative overflow-hidden">
+  <div class="container-page relative pb-16 pt-14 sm:pb-20 sm:pt-20 lg:pb-28 lg:pt-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16">
+      <div>
+        <span class="eyebrow">
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-coral" aria-hidden="true"></span>
+          For mom, baby &amp; dad
+        </span>
+
+        <h1 class="display-hero mt-5">Hospital Bag Checklist</h1>
+
+        <p class="mt-5 font-display text-xl font-medium tracking-tight text-body-strong sm:text-2xl">
+          Pack what you need. Skip what you don&apos;t.
+        </p>
+
+        <p class="lead mt-5 max-w-xl">
+          A simple guide to what to pack in a hospital bag for mom, baby and dad — everything you
+          need to prepare for labor, birth and your hospital stay.
+        </p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a href={PRIMARY_CTA.href} class="btn-primary btn-lg">
+            {PRIMARY_CTA.label}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="#checklist-preview" class="btn-secondary btn-lg">View the checklist</a>
+        </div>
+
+        <ul class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted">
+          <li class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-mint" aria-hidden="true"></span>
+            Free and printable
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-butter" aria-hidden="true"></span>
+            No sign-up
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-lavender" aria-hidden="true"></span>
+            Separate lists per bag
+          </li>
+        </ul>
+      </div>
+
+      <div class="relative">
+        <div
+          class="overflow-hidden bg-canvas-pure/50"
+          style="border-radius: var(--radius-2xl); box-shadow: var(--shadow-clay-lg);"
+        >
+          <Image
+            src={heroImage}
+            alt="A clay-style hospital bag packed with a rolled blanket and a baby bottle, with a bodysuit, pacifier, rattle and checklist floating above it"
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 1024px) 600px, (min-width: 640px) 90vw, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+            quality={72}
+            class="h-auto w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-14 max-w-3xl text-sm leading-relaxed text-muted lg:mt-20">
+      Our pregnancy hospital bag checklist helps you prepare everything for mom, baby and dad
+      before labor and delivery — from comfortable clothes and toiletries to baby essentials,
+      hospital documents and going-home outfits. Use it as a guide,{' '}
+      <a
+        href={ROUTES.pdf.path}
+        class="text-link"
+        >print it for later</a
+      >{' '}or build a personalised version in a couple of minutes.
+    </p>
+  </div>
+</section>

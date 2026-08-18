@@ -1,0 +1,60 @@
+---
+import type { FaqEntry } from '../../lib/schema';
+import SectionHeader from './SectionHeader.astro';
+
+interface Props {
+  faqs: FaqEntry[];
+  title?: string;
+  eyebrow?: string;
+  lead?: string;
+  id?: string;
+}
+
+const {
+  faqs,
+  title = 'Hospital bag checklist FAQs',
+  eyebrow = 'Questions',
+  lead,
+  id = 'faq',
+} = Astro.props;
+---
+
+<section id={id} class="section no-print">
+  <div class="container-page">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
+      <SectionHeader eyebrow={eyebrow} title={title} lead={lead} class="reveal lg:sticky lg:top-28 lg:self-start" />
+
+      <div class="divide-y divide-hairline border-t border-hairline">
+        {
+          faqs.map((faq) => (
+            <details class="group py-1">
+              <summary
+                class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left"
+              >
+                <h3 class="font-sans text-[1.0625rem] font-semibold leading-snug text-ink">
+                  {faq.question}
+                </h3>
+                <span
+                  class="relative mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-soft text-ink transition-transform duration-200 group-open:rotate-45"
+                  aria-hidden="true"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M7 1v12M1 7h12"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <p class="max-w-2xl pb-5 pr-12 text-[0.9375rem] leading-relaxed text-body">
+                {faq.answer}
+              </p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

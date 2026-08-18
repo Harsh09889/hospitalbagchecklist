@@ -1,0 +1,24 @@
+---
+import { ACCENTS } from '../../lib/accents';
+import { PACKING_TIMELINE } from '../../data/content/checklists';
+---
+
+<ol class="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {
+    PACKING_TIMELINE.map((step, index) => {
+      const accent = ACCENTS[step.accent];
+      return (
+        <li class={`card-feature reveal flex h-full flex-col ${accent.fill} ${accent.onFill}`}>
+          <div class="flex items-center justify-between">
+            <span class="font-display text-2xl font-medium">{step.week}</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.14em] opacity-70">
+              Step {index + 1}
+            </span>
+          </div>
+          <h3 class={`mt-6 font-display text-lg font-semibold ${accent.onFill}`}>{step.title}</h3>
+          <p class="mt-2 text-[0.9375rem] leading-relaxed opacity-90">{step.body}</p>
+        </li>
+      );
+    })
+  }
+</ol>

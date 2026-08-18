@@ -1,0 +1,156 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/marketing/Breadcrumbs.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
+import RelatedPages from '../components/marketing/RelatedPages.astro';
+import FinalCta from '../components/marketing/FinalCta.astro';
+import { ROUTES, PRIMARY_CTA, absoluteUrl, type RouteKey } from '../config/site';
+import type { FaqEntry } from '../lib/schema';
+import type { PackGroup } from '../data/content/checklists';
+import {
+  buildGraph,
+  organizationSchema,
+  webSiteSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  articleSchema,
+  faqSchema,
+  itemListSchema,
+} from '../lib/schema';
+
+interface Props {
+  routeKey: RouteKey;
+  /** On-page H1 — usually shorter than the <title>. */
+  h1: string;
+  lead: string;
+  /** Groups used to build ItemList structured data. */
+  groups?: PackGroup[];
+  faqs: FaqEntry[];
+  faqTitle?: string;
+  related: RouteKey[];
+  /** Anchor links rendered under the intro. */
+  contents?: { label: string; href: string }[];
+  /** Last substantive content edit, surfaced in Article schema. */
+  updated?: string;
+  ctaTitle?: string;
+  ctaLead?: string;
+}
+
+const {
+  routeKey,
+  h1,
+  lead,
+  groups = [],
+  faqs,
+  faqTitle,
+  related,
+  contents = [],
+  updated = '2026-08-17',
+  ctaTitle,
+  ctaLead,
+} = Astro.props;
+
+const route = ROUTES[routeKey];
+const url = absoluteUrl(route.path);
+
+const trail = [
+  { name: 'Home', path: '/' },
+  { name: route.label, path: route.path },
+];
+
+const checklistItems = groups.flatMap((group) => group.items.map((item) => item.name));
+
+const jsonLd = buildGraph([
+  organizationSchema(),
+  webSiteSchema(),
+  webPageSchema({
+    url,
+    name: route.title,
+    description: route.description,
+    breadcrumbId: `${url}#breadcrumb`,
+  }),
+  breadcrumbSchema(url, trail),
+  articleSchema({
+    url,
+    headline: h1,
+    description: route.description,
+    datePublished: '2026-08-17',
+    dateModified: updated,
+  }),
+  ...(checklistItems.length
+    ? [
+        itemListSchema({
+          url,
+          name: h1,
+          description: route.description,
+          items: checklistItems,
+        }),
+      ]
+    : []),
+  faqSchema(url, faqs),
+]);
+---
+
+<BaseLayout
+  title={route.title}
+  description={route.description}
+  path={route.path}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <!-- Page header -->
+  <header class="sky-wash no-print">
+    <div class="container-page pb-14 pt-8 sm:pb-20 sm:pt-10">
+      <Breadcrumbs trail={trail} />
+
+      <div
+        class="mt-8 grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.72fr)] lg:gap-16"
+      >
+        <div>
+          <h1 class="display-xl">{h1}</h1>
+          <p class="lead mt-5 max-w-2xl">{lead}</p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href={PRIMARY_CTA.href} class="btn-primary">
+              {PRIMARY_CTA.label}
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a href={ROUTES.pdf.path} class="btn-secondary">Printable version</a>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <slot name="illustration" />
+        </div>
+      </div>
+
+      {
+        contents.length > 0 && (
+          <nav aria-label="On this page" class="mt-14 no-print">
+            <p class="eyebrow">On this page</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {contents.map((entry) => (
+                <li>
+                  <a
+                    href={entry.href}
+                    class="inline-flex min-h-11 items-center rounded-full border border-hairline bg-canvas-pure px-4 text-sm font-medium text-body transition-colors hover:border-ink hover:text-ink"
+                  >
+                    {entry.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+    </div>
+  </header>
+
+  <slot />
+
+  <FaqSection faqs={faqs} title={faqTitle ?? `${h1} FAQs`} id="faq" />
+
+  <RelatedPages keys={related} />
+
+  <FinalCta title={ctaTitle} lead={ctaLead} />
+</BaseLayout>

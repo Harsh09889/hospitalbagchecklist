@@ -1,0 +1,76 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const uid = 'labor';
+---
+
+<svg
+  viewBox="0 0 400 300"
+  fill="none"
+  role="img"
+  aria-label="A clay hospital bag beside a clock and a folded birth plan"
+  class={className}
+>
+  <defs>
+    <linearGradient id={`${uid}-bag`} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#a8c9e0" />
+      <stop offset="1" stop-color="#5c88a8" />
+    </linearGradient>
+    <linearGradient id={`${uid}-clock`} x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffe3ad" />
+      <stop offset="1" stop-color="#eab648" />
+    </linearGradient>
+    <linearGradient id={`${uid}-paper`} x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#fffdf8" />
+      <stop offset="1" stop-color="#e6e0cf" />
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="264" rx="160" ry="22" fill="#1c1b18" opacity="0.06" />
+
+  <!-- Duffel bag -->
+  <g>
+    <rect x="66" y="150" width="196" height="98" rx="42" fill={`url(#${uid}-bag)`} />
+    <path
+      d="M124 150c0-18 15-32 33-32h14c18 0 33 14 33 32"
+      stroke="#e8c98a"
+      stroke-width="12"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <rect x="126" y="182" width="76" height="42" rx="18" fill="#f4907c" />
+    <path d="M144 203h40" stroke="#fffdf8" stroke-width="6" stroke-linecap="round" opacity="0.7" />
+    <rect x="82" y="164" width="26" height="52" rx="13" fill="#fffdf8" opacity="0.3" />
+  </g>
+
+  <!-- Clock -->
+  <g>
+    <circle cx="308" cy="152" r="52" fill={`url(#${uid}-clock)`} />
+    <circle cx="308" cy="152" r="38" fill="#fffdf8" opacity="0.8" />
+    <path
+      d="M308 128v26l18 12"
+      stroke="#8a6210"
+      stroke-width="7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <rect x="300" y="92" width="16" height="12" rx="5" fill="#cf9426" />
+  </g>
+
+  <!-- Birth plan -->
+  <g transform="rotate(-8 100 108)">
+    <rect x="62" y="66" width="76" height="94" rx="14" fill={`url(#${uid}-paper)`} />
+    <path
+      d="M78 92h44M78 110h44M78 128h28"
+      stroke="#b9a8e8"
+      stroke-width="6"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <circle cx="228" cy="82" r="12" fill="#8fd3bd" />
+  <circle cx="264" cy="112" r="7" fill="#f2a2b8" />
+</svg>

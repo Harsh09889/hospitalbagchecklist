@@ -1,0 +1,148 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import SectionHeader from '../components/marketing/SectionHeader.astro';
+import PackGroupCard from '../components/marketing/PackGroupCard.astro';
+import PrintableBand from '../components/marketing/PrintableBand.astro';
+import DadKit from '../components/illustrations/DadKit.astro';
+import { ROUTES } from '../config/site';
+import { DAD_GROUPS, DOCUMENT_GROUP } from '../data/content/checklists';
+import { DAD_FAQS } from '../data/content/faqs';
+
+const contents = [
+  { label: 'What to pack', href: '#what-to-pack' },
+  { label: 'Your job on the day', href: '#your-job' },
+  { label: 'Documents', href: '#documents' },
+  { label: 'FAQs', href: '#faq' },
+];
+
+const jobs = [
+  {
+    title: 'Keep the paperwork',
+    body: 'You carry the folder. Know what is in it and hand it over at reception so mom never has to think about admin.',
+    accent: 'bg-brand-sky text-on-sky',
+  },
+  {
+    title: 'Manage the logistics',
+    body: 'Parking, arrival instructions, who gets called and when. Write the parking level down — you will not remember it.',
+    accent: 'bg-brand-butter text-on-butter',
+  },
+  {
+    title: 'Handle food and power',
+    body: 'Hospital kitchens close and phone batteries drain. Snacks, water and a power bank make you genuinely useful.',
+    accent: 'bg-brand-coral text-on-coral',
+  },
+  {
+    title: 'Be the second bag',
+    body: 'Leave the big stay bag in the car and bring it up once mom has been admitted and moved to a room.',
+    accent: 'bg-brand-mint text-on-mint',
+  },
+];
+---
+
+<ContentPage
+  routeKey="dad"
+  h1="Hospital Bag Checklist for Dad"
+  lead="Dad doesn't need a huge bag — but the wrong missing item makes for a long day. This dad and birth partner checklist covers the essentials, the practical stuff for a long stay, and the jobs that are genuinely yours on the day."
+  groups={[...DAD_GROUPS, DOCUMENT_GROUP]}
+  faqs={DAD_FAQS}
+  related={['mom', 'labor', 'momAndBaby']}
+  contents={contents}
+  ctaTitle="Get a checklist for the whole family"
+  ctaLead="One list, split into a labor bag, a stay bag, a baby bag and your own — so nothing lands on the wrong person."
+>
+  <DadKit slot="illustration" class="w-full max-w-md lg:ml-auto" />
+
+  <section id="what-to-pack" class="section">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <h2>What should dad pack for the hospital?</h2>
+        <p>
+          Pack as though you are staying overnight, even if you expect to go home. Labor rarely runs
+          to schedule, and the difference between a manageable night and a miserable one is usually a
+          jumper, a phone charger and something to eat.
+        </p>
+        <p>
+          A backpack works better than a duffel here. You will be carrying things, holding doors,
+          and at some point pushing a wheelchair or carrying a car seat. Keeping your hands free
+          matters more than looking organised.
+        </p>
+        <p>
+          Keep your bag genuinely separate from mom&apos;s. Not because of tidiness, but because you
+          may need to head home or out to the car quickly, and you do not want to be unpacking a
+          shared bag to find your own keys.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-4 md:grid-cols-2">
+        {DAD_GROUPS.map((group, index) => <PackGroupCard group={group} index={index + 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="your-job" class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="On the day"
+        title="Four jobs that are yours"
+        lead="Packing is only half of it. These are the practical roles birth partners consistently end up owning — and they are much easier if you have decided in advance."
+      />
+
+      <ul class="mt-10 grid gap-4 sm:grid-cols-2">
+        {
+          jobs.map((job, index) => (
+            <li class={`card-feature reveal ${job.accent}`}>
+              <span class="font-display text-3xl font-medium opacity-60">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 class="mt-4 font-display text-xl font-medium">{job.title}</h3>
+              <p class="mt-2 leading-relaxed opacity-90">{job.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="prose-clay mx-auto mt-14 max-w-[45rem]">
+        <h3>What to wear</h3>
+        <p>
+          Layers, and shoes you can stand in for hours. Labor rooms are often kept warm while
+          corridors and overnight wards are cold, so a T-shirt plus a jumper beats one heavy top. If
+          there is any chance of a birth pool or shower room, a pair of swim shorts or a spare T-shirt
+          takes up almost no space.
+        </p>
+        <p>
+          Pack one full change of clothes at minimum. It is very common to end up staying longer than
+          planned, and a fresh T-shirt after twenty hours makes more difference than it sounds like
+          it should.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="documents" class="section">
+    <div class="container-page">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="Paperwork"
+          title="Documents you should be carrying"
+          lead="If you take one responsibility off mom's plate, make it this one. Keep everything in a single folder in your bag, and confirm you both know where it lives before the day arrives."
+        />
+        <PackGroupCard group={DOCUMENT_GROUP} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-page">
+      <PrintableBand />
+      <p class="mt-8 text-sm text-muted">
+        Next, check the
+        <a
+          href={ROUTES.labor.path}
+          class="text-link"
+          >labor bag checklist</a
+        >
+        so you know what mom will be reaching for in the delivery room.
+      </p>
+    </div>
+  </section>
+</ContentPage>

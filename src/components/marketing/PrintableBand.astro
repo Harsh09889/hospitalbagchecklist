@@ -1,0 +1,54 @@
+---
+import { ROUTES } from '../../config/site';
+import PrintableKit from '../illustrations/PrintableKit.astro';
+
+interface Props {
+  /** On the PDF page itself the primary action prints instead of navigating. */
+  variant?: 'link' | 'print';
+}
+
+const { variant = 'link' } = Astro.props;
+---
+
+<div
+  class="card-feature reveal grid items-center gap-8 bg-brand-lavender text-on-lavender lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] lg:gap-12 lg:p-12"
+>
+  <div>
+    <span class="text-xs font-semibold uppercase tracking-[0.14em] opacity-70">Printable</span>
+    <h2 class="display-lg mt-3 text-on-lavender">Prefer paper? We&apos;ve got you.</h2>
+    <p class="mt-4 max-w-lg leading-relaxed opacity-90">
+      Download a printable hospital bag checklist for mom, baby and dad. Keep a copy at home, share
+      it with your partner, or take it shopping with you.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {
+        variant === 'print' ? (
+          <>
+            <button type="button" class="btn-on-color" data-print-checklist>
+              Print checklist
+            </button>
+            <a href={ROUTES.generator.path} class="btn-on-color">
+              Create my checklist
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </>
+        ) : (
+          <>
+            <a href={ROUTES.pdf.path} class="btn-on-color">
+              Get the printable checklist
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a href={ROUTES.generator.path} class="btn-on-color">Create my checklist</a>
+          </>
+        )
+      }
+    </div>
+  </div>
+
+  <PrintableKit class="mx-auto h-56 w-full max-w-sm lg:h-64" />
+</div>
+
+<script>
+  document.querySelector('[data-print-checklist]')?.addEventListener('click', () => window.print());
+</script>

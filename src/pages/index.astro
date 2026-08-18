@@ -1,0 +1,444 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/marketing/Hero.astro';
+import SectionHeader from '../components/marketing/SectionHeader.astro';
+import ChecklistPreview from '../components/marketing/ChecklistPreview.astro';
+import PackGroupCard from '../components/marketing/PackGroupCard.astro';
+import PackingTimeline from '../components/marketing/PackingTimeline.astro';
+import HospitalQuestions from '../components/marketing/HospitalQuestions.astro';
+import DeliveryCards from '../components/marketing/DeliveryCards.astro';
+import OverpackCompare from '../components/marketing/OverpackCompare.astro';
+import PrintableBand from '../components/marketing/PrintableBand.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
+import FinalCta from '../components/marketing/FinalCta.astro';
+import SeoIntro from '../components/marketing/SeoIntro.astro';
+import MomKit from '../components/illustrations/MomKit.astro';
+import BabyKit from '../components/illustrations/BabyKit.astro';
+import DadKit from '../components/illustrations/DadKit.astro';
+import HospitalKit from '../components/illustrations/HospitalKit.astro';
+
+import { ROUTES, absoluteUrl } from '../config/site';
+import { MOM_GROUPS, BABY_GROUPS, DAD_GROUPS, MUST_PACK } from '../data/content/checklists';
+import { HOME_FAQS } from '../data/content/faqs';
+import {
+  buildGraph,
+  organizationSchema,
+  webSiteSchema,
+  webPageSchema,
+  faqSchema,
+  itemListSchema,
+  webApplicationSchema,
+} from '../lib/schema';
+
+const route = ROUTES.home;
+const url = absoluteUrl(route.path);
+
+const jsonLd = buildGraph([
+  organizationSchema(),
+  webSiteSchema(),
+  webPageSchema({ url, name: route.title, description: route.description }),
+  itemListSchema({
+    url,
+    name: 'Hospital bag checklist essentials',
+    description: 'The items most parents need to pack for the hospital.',
+    items: MUST_PACK,
+  }),
+  webApplicationSchema(),
+  faqSchema(url, HOME_FAQS),
+]);
+
+const problems = [
+  'What does mom need?',
+  'What does the baby need?',
+  'What does dad need?',
+  'How much should you pack?',
+  'What does the hospital already provide?',
+];
+
+const people = [
+  {
+    label: 'Mom',
+    heading: 'What mom needs',
+    body: 'Comfort during labor, practical clothing for the ward, and everything for recovery before and after birth.',
+    href: ROUTES.mom.path,
+    classes: 'bg-brand-lavender text-on-lavender',
+    count: MOM_GROUPS.reduce((sum, group) => sum + group.items.length, 0),
+  },
+  {
+    label: 'Baby',
+    heading: 'What baby needs',
+    body: 'A few soft outfits, muslins, swaddles and a going-home outfit. Much less than most lists suggest.',
+    href: ROUTES.baby.path,
+    classes: 'bg-brand-butter text-on-butter',
+    count: BABY_GROUPS.reduce((sum, group) => sum + group.items.length, 0),
+  },
+  {
+    label: 'Dad',
+    heading: 'What dad needs',
+    body: 'Documents, chargers, snacks and a change of clothes — enough to stay useful through a long day.',
+    href: ROUTES.dad.path,
+    classes: 'bg-brand-sky text-on-sky',
+    count: DAD_GROUPS.reduce((sum, group) => sum + group.items.length, 0),
+  },
+];
+---
+
+<BaseLayout
+  title={route.title}
+  description={route.description}
+  path={route.path}
+  keywords={route.keywords}
+  jsonLd={jsonLd}
+>
+  <!-- 02 · Hero -->
+  <Hero />
+
+  <!-- 03 · The problem -->
+  <section class="section">
+    <div class="container-page">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="display-lg">Preparing for birth is a lot.</h2>
+
+        <ul class="mt-10 flex flex-wrap justify-center gap-2.5">
+          {
+            problems.map((problem) => (
+              <li class="rounded-full border border-hairline bg-canvas-pure px-4 py-2 text-sm text-body">
+                {problem}
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="mt-10 font-display text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
+          You don&apos;t need 100 things.<br />You need the right things.
+        </p>
+      </div>
+
+      <div class="mt-16">
+        <SectionHeader
+          title="We&apos;ve made the hospital bag simple."
+          lead="Three short lists instead of one overwhelming one, so everybody knows what they are responsible for."
+          align="center"
+        />
+
+        <ul class="mt-10 grid gap-4 md:grid-cols-3">
+          {
+            people.map((person) => (
+              <li>
+                <a
+                  href={person.href}
+                  class={`card-feature reveal flex h-full flex-col ${person.classes}`}
+                >
+                  <span class="text-xs font-semibold uppercase tracking-[0.14em] opacity-75">
+                    {person.label}
+                  </span>
+                  <span class="mt-4 font-display text-2xl font-medium">{person.heading}</span>
+                  <span class="mt-3 flex-1 leading-relaxed opacity-90">{person.body}</span>
+                  <span class="mt-6 flex items-center justify-between gap-4 border-t border-current/15 pt-5 text-sm font-semibold">
+                    {person.count} items
+                    <span aria-hidden="true">&rarr;</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Checklist preview -->
+  <section id="checklist-preview" class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <SectionHeader
+            eyebrow="The checklist"
+            title="One simple checklist for the whole family."
+            lead="Every item comes with a suggested quantity and a plain-English reason, grouped by who it belongs to. Tick things off as you pack and watch the bag come together."
+          />
+
+          <ul class="mt-8 space-y-3">
+            <li class="flex items-start gap-3 text-[0.9375rem] text-body">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-mint" aria-hidden="true"
+              ></span>
+              Suggested quantities, so you are not guessing how many to bring
+            </li>
+            <li class="flex items-start gap-3 text-[0.9375rem] text-body">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-coral" aria-hidden="true"
+              ></span>
+              Split into a labor bag, a stay bag, a baby bag and a partner bag
+            </li>
+            <li class="flex items-start gap-3 text-[0.9375rem] text-body">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-sky" aria-hidden="true"
+              ></span>
+              Flags the items your hospital may already provide
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal">
+          <ChecklistPreview />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04b · SEO intro -->
+  <SeoIntro />
+
+  <!-- 05 · Mom -->
+  <section class="section">
+    <div class="container-page">
+      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="For mom"
+          title="Hospital Bag Checklist for Mom"
+          lead="Your hospital bag should make labor, delivery and recovery a little easier. Pack comfortable clothes, personal care essentials, important documents and the things you will actually want during your stay."
+        />
+        <MomKit class="reveal w-full max-w-md lg:ml-auto" />
+      </div>
+
+      <div class="mt-12 grid gap-4 lg:grid-cols-3">
+        {
+          MOM_GROUPS.map((group, index) => (
+            <PackGroupCard group={group} index={index + 1} limit={6} moreHref={ROUTES.mom.path} />
+          ))
+        }
+      </div>
+
+      <a href={ROUTES.mom.path} class="btn-secondary mt-8">
+        See the complete hospital bag checklist for mom
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 06 · Baby -->
+  <section class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="For baby"
+          title="Baby Hospital Bag Checklist"
+          lead="Your baby doesn&apos;t need a huge suitcase. A few comfortable clothes, diapers if your hospital requires them, muslins, swaddles and a going-home outfit are usually enough to get started."
+        />
+        <BabyKit class="reveal w-full max-w-md lg:ml-auto" />
+      </div>
+
+      <div class="mt-12 grid gap-4 lg:grid-cols-3">
+        {
+          BABY_GROUPS.map((group, index) => (
+            <PackGroupCard group={group} index={index + 1} limit={6} moreHref={ROUTES.baby.path} />
+          ))
+        }
+      </div>
+
+      <a href={ROUTES.baby.path} class="btn-secondary mt-8">
+        See the complete baby hospital bag checklist
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 07 · Dad -->
+  <section class="section">
+    <div class="container-page">
+      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="For dad & partners"
+          title="Hospital Bag Checklist for Dad"
+          lead="Dad doesn&apos;t need a huge bag either. Pack the essentials you will need to stay comfortable, connected and genuinely useful during labor and the hospital stay."
+        />
+        <DadKit class="reveal w-full max-w-md lg:ml-auto" />
+      </div>
+
+      <div class="mt-12 grid gap-4 md:grid-cols-2">
+        {
+          DAD_GROUPS.map((group, index) => (
+            <PackGroupCard group={group} index={index + 1} limit={7} moreHref={ROUTES.dad.path} />
+          ))
+        }
+      </div>
+
+      <a href={ROUTES.dad.path} class="btn-secondary mt-8">
+        See the dad &amp; partner checklist
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 08 · Mom + baby + dad -->
+  <section class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="All together"
+        title="One bag. Three people. Zero guesswork."
+        lead="Our hospital bag checklist for mom and baby brings everything together in one simple place — a hospital bag for mom and baby, plus a separate dad and partner checklist, so everyone knows exactly what to bring."
+        align="center"
+      />
+
+      <div class="mt-14">
+        <div class="mx-auto max-w-md">
+          <div class="card-clay px-6 py-6 text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+              The hospital bag
+            </p>
+            <p class="mt-2 font-display text-2xl font-medium text-ink">
+              {
+                MOM_GROUPS.concat(BABY_GROUPS, DAD_GROUPS).reduce(
+                  (sum, group) => sum + group.items.length,
+                  0,
+                )
+              } items, four bags
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="mx-auto mt-6 h-8 w-px bg-hairline"
+          aria-hidden="true"
+        >
+        </div>
+
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <li class="card reveal p-6 text-center">
+            <span class="mx-auto block h-2.5 w-2.5 rounded-full bg-brand-lavender" aria-hidden="true"
+            ></span>
+            <span class="mt-4 block font-display text-lg font-medium text-ink">Mom's bag</span>
+            <span class="mt-1 block text-sm text-muted">
+              {MOM_GROUPS.reduce((sum, group) => sum + group.items.length, 0)} items
+            </span>
+            <a href={ROUTES.mom.path} class="link-arrow mt-4">
+              View <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          <li class="card reveal p-6 text-center">
+            <span class="mx-auto block h-2.5 w-2.5 rounded-full bg-brand-butter" aria-hidden="true"
+            ></span>
+            <span class="mt-4 block font-display text-lg font-medium text-ink">Baby's bag</span>
+            <span class="mt-1 block text-sm text-muted">
+              {BABY_GROUPS.reduce((sum, group) => sum + group.items.length, 0)} items
+            </span>
+            <a href={ROUTES.baby.path} class="link-arrow mt-4">
+              View <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          <li class="card reveal p-6 text-center">
+            <span class="mx-auto block h-2.5 w-2.5 rounded-full bg-brand-sky" aria-hidden="true"
+            ></span>
+            <span class="mt-4 block font-display text-lg font-medium text-ink">Dad's bag</span>
+            <span class="mt-1 block text-sm text-muted">
+              {DAD_GROUPS.reduce((sum, group) => sum + group.items.length, 0)} items
+            </span>
+            <a href={ROUTES.dad.path} class="link-arrow mt-4">
+              View <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+          <li class="card reveal p-6 text-center">
+            <span class="mx-auto block h-2.5 w-2.5 rounded-full bg-brand-coral" aria-hidden="true"
+            ></span>
+            <span class="mt-4 block font-display text-lg font-medium text-ink">Documents</span>
+            <span class="mt-1 block text-sm text-muted">8 items</span>
+            <a href={ROUTES.momAndBaby.path} class="link-arrow mt-4">
+              View <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href={ROUTES.momAndBaby.path} class="btn-primary">
+          See the mom, baby &amp; dad checklist
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · Timeline -->
+  <section class="section">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Timing"
+        title="When should you pack your hospital bag?"
+        lead="There is no single perfect week for everyone, but preparing your bag before the final weeks of pregnancy buys you peace of mind. Many pregnancy guides suggest having it ready a few weeks before your due date — your doctor or hospital may have their own recommendation."
+      />
+
+      <div class="mt-12">
+        <PackingTimeline />
+      </div>
+
+      <a href={ROUTES.pregnancy.path} class="btn-secondary mt-8">
+        Read the full pregnancy packing guide
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 10 · Hospital -->
+  <section id="hospital" class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+        <div>
+          <SectionHeader
+            eyebrow="Before you pack"
+            title="Ask your hospital first."
+            lead="Every hospital has different policies and supplies. Before packing your bag, ask what they provide, what you need to bring and what you are allowed to take into the maternity ward. It is the fastest way to avoid carrying things you never needed."
+          />
+          <HospitalKit class="mt-10 hidden w-full max-w-sm lg:block" />
+        </div>
+
+        <HospitalQuestions />
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · Delivery type -->
+  <section class="section">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="By delivery"
+        title="Your delivery may change what you pack."
+        lead="Your hospital bag may look a little different depending on your delivery plans and expected length of stay. Explore the guides for labor and vaginal birth, or for a planned or unplanned C-section."
+      />
+
+      <div class="mt-12">
+        <DeliveryCards />
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · Don't overpack -->
+  <section class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Keep it light"
+        title="You don&apos;t need to pack the whole nursery."
+        lead="Hospital bag checklists get overwhelming fast. We&apos;ve separated the hospital bag essentials from the nice-to-haves so you can focus on what is genuinely useful during your stay."
+        align="center"
+      />
+
+      <div class="mt-12">
+        <OverpackCompare />
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 · Printable -->
+  <section class="section">
+    <div class="container-page">
+      <PrintableBand />
+    </div>
+  </section>
+
+  <!-- 14 · FAQ -->
+  <FaqSection
+    faqs={HOME_FAQS}
+    title="Hospital bag checklist FAQs"
+    lead="The questions parents ask us most, answered plainly. For anything medical, your doctor or midwife is the right person to ask."
+  />
+
+  <!-- 15 · Final CTA -->
+  <FinalCta />
+</BaseLayout>

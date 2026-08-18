@@ -1,0 +1,54 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const uid = 'overpacked';
+---
+
+<svg
+  viewBox="0 0 300 240"
+  fill="none"
+  role="img"
+  aria-label="An overstuffed clay bag with clothing spilling out of the top"
+  class={className}
+>
+  <defs>
+    <linearGradient id={`${uid}-bag`} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#e8dfc9" />
+      <stop offset="1" stop-color="#bfb59a" />
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="150" cy="214" rx="112" ry="18" fill="#1c1b18" opacity="0.06" />
+
+  <!-- Spilling contents -->
+  <rect x="62" y="60" width="58" height="26" rx="13" fill="#f9b3a3" transform="rotate(-18 91 73)" />
+  <rect x="180" y="52" width="64" height="26" rx="13" fill="#b9a8e8" transform="rotate(14 212 65)" />
+  <rect x="126" y="34" width="52" height="24" rx="12" fill="#8fd3bd" />
+  <circle cx="98" cy="42" r="14" fill="#f7cf72" />
+  <circle cx="216" cy="98" r="11" fill="#f2a2b8" />
+  <rect x="46" y="104" width="44" height="22" rx="11" fill="#9ecbe8" transform="rotate(-28 68 115)" />
+
+  <!-- Bag, bulging -->
+  <path
+    d="M56 122c0-14 12-24 27-24h134c15 0 27 10 27 24v46c0 24-20 42-45 42H101c-25 0-45-18-45-42v-46Z"
+    fill={`url(#${uid}-bag)`}
+  />
+  <path
+    d="M104 98c0-14 11-25 25-25h42c14 0 25 11 25 25"
+    stroke="#a3987c"
+    stroke-width="10"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <!-- Straining zipper -->
+  <path
+    d="M62 132h176"
+    stroke="#8d8265"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-dasharray="14 9"
+  />
+</svg>

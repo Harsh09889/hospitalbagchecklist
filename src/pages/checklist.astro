@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ChecklistFlow } from '../components/checklist/ChecklistFlow';
+import { ROUTES } from '../config/site';
+
+const route = ROUTES.generator;
+---
+
+<BaseLayout
+  title={route.title}
+  description={route.description}
+  path={route.path}
+  noindex
+>
+  <div class="container-page py-4 sm:py-6">
+    <div class="mx-auto max-w-lg">
+      <ChecklistFlow client:load />
+    </div>
+  </div>
+</BaseLayout>

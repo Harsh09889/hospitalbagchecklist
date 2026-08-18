@@ -1,0 +1,69 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/marketing/Breadcrumbs.astro';
+import { ROUTES, absoluteUrl, type RouteKey } from '../config/site';
+import {
+  buildGraph,
+  organizationSchema,
+  webSiteSchema,
+  webPageSchema,
+  breadcrumbSchema,
+} from '../lib/schema';
+
+interface Props {
+  routeKey: RouteKey;
+  h1: string;
+  lead: string;
+  updated?: string;
+}
+
+const { routeKey, h1, lead, updated = '2026-08-18' }: Props = Astro.props;
+
+const route = ROUTES[routeKey];
+const url = absoluteUrl(route.path);
+
+const trail = [
+  { name: 'Home', path: '/' },
+  { name: route.label, path: route.path },
+];
+
+const jsonLd = buildGraph([
+  organizationSchema(),
+  webSiteSchema(),
+  webPageSchema({
+    url,
+    name: route.title,
+    description: route.description,
+    breadcrumbId: `${url}#breadcrumb`,
+  }),
+  breadcrumbSchema(url, trail),
+]);
+---
+
+<BaseLayout
+  title={route.title}
+  description={route.description}
+  path={route.path}
+  keywords={[...route.keywords]}
+  jsonLd={jsonLd}
+>
+  <header class="sky-wash">
+    <div class="container-page pb-14 pt-8 sm:pb-20 sm:pt-10">
+      <Breadcrumbs trail={trail} />
+
+      <div class="mt-8 max-w-3xl">
+        <h1 class="display-xl">{h1}</h1>
+        <p class="lead mt-5">{lead}</p>
+        <p class="mt-4 text-sm text-muted-soft">Last updated: {updated}</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="section">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <slot />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

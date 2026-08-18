@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTENT_ROUTE_KEYS, ROUTES } from '../config/site';
+import { accentAt } from '../lib/accents';
+import TidyBag from '../components/illustrations/TidyBag.astro';
+---
+
+<BaseLayout
+  title="Page not found — Hospital Bag Checklist"
+  description="That page does not exist. Browse the hospital bag checklists for mom, baby and dad instead."
+  path="/404"
+  noindex
+>
+  <section class="sky-wash">
+    <div class="container-page py-20 sm:py-28">
+      <div class="mx-auto max-w-2xl text-center">
+        <TidyBag class="mx-auto h-40 w-full max-w-xs" />
+        <p class="eyebrow mt-8 justify-center">Error 404</p>
+        <h1 class="display-xl mt-4">This page didn&apos;t make the bag.</h1>
+        <p class="lead mx-auto mt-5 max-w-lg">
+          The page you were looking for doesn&apos;t exist or has moved. Here is everything else.
+        </p>
+        <a href="/" class="btn-primary btn-lg mt-9">
+          Back to the hospital bag checklist
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page">
+      <h2 class="display-lg">All checklists and guides</h2>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          CONTENT_ROUTE_KEYS.map((key, index) => {
+            const route = ROUTES[key];
+            const accent = accentAt(index);
+            return (
+              <li>
+                <a href={route.path} class="card flex h-full flex-col p-6">
+                  <span class={`h-1.5 w-10 rounded-full ${accent.dot}`} aria-hidden="true"></span>
+                  <span class="mt-4 font-display text-lg font-medium text-ink">{route.label}</span>
+                  <span class="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                    {route.description}
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

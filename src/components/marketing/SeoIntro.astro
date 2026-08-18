@@ -1,0 +1,21 @@
+---
+import { HOME_SEO_BLOCKS } from '../../data/content/home-seo';
+---
+
+<section id="about-checklist" class="section">
+  <div class="container-page">
+    <div class="prose-clay mx-auto max-w-[45rem]">
+      {
+        HOME_SEO_BLOCKS.map((block) => {
+          if (block.type === 'h2') {
+            return <h2>{block.text}</h2>;
+          }
+          if (block.type === 'h3') {
+            return <h3>{block.text}</h3>;
+          }
+          return <p set:html={block.html} />;
+        })
+      }
+    </div>
+  </div>
+</section>

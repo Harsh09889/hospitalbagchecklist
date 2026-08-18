@@ -1,0 +1,33 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  /** Heading level — sections use h2, page titles use h1. */
+  as?: 'h1' | 'h2' | 'h3';
+  size?: 'lg' | 'xl';
+  id?: string;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  align = 'left',
+  as: Tag = 'h2',
+  size = 'lg',
+  id,
+  class: className = '',
+} = Astro.props;
+
+const alignment = align === 'center' ? 'text-center mx-auto items-center' : '';
+const leadWidth = align === 'center' ? 'mx-auto max-w-2xl' : 'max-w-2xl';
+---
+
+<div class={`flex flex-col gap-4 ${alignment} ${className}`}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <Tag id={id} class={size === 'xl' ? 'display-xl' : 'display-lg'} set:html={title} />
+  {lead && <p class={`lead ${leadWidth}`} set:html={lead} />}
+</div>

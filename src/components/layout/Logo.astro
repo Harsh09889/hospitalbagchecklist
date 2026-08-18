@@ -1,0 +1,37 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<span class={`inline-flex items-center gap-2.5 ${className}`}>
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    aria-hidden="true"
+    class="shrink-0"
+  >
+    <rect x="2" y="10" width="28" height="18" rx="6" fill="var(--color-brand-sky)" />
+    <path
+      d="M11 10V8a5 5 0 0 1 10 0v2"
+      stroke="var(--color-on-sky)"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+    <rect x="12" y="15" width="8" height="8" rx="2.5" fill="var(--color-brand-butter)" />
+    <path
+      d="m14.4 19 1.5 1.6 2.4-2.7"
+      stroke="var(--color-on-butter)"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <span class="font-display text-[1.0625rem] font-semibold tracking-tight text-ink">
+    Hospital Bag Checklist
+  </span>
+</span>

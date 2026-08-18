@@ -1,0 +1,180 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import SectionHeader from '../components/marketing/SectionHeader.astro';
+import PackGroupCard from '../components/marketing/PackGroupCard.astro';
+import PrintableBand from '../components/marketing/PrintableBand.astro';
+import HospitalQuestions from '../components/marketing/HospitalQuestions.astro';
+import LaborKit from '../components/illustrations/LaborKit.astro';
+import { ROUTES } from '../config/site';
+import { LABOR_COMFORT_GROUP, MOM_GROUPS, DOCUMENT_GROUP } from '../data/content/checklists';
+import { LABOR_FAQS } from '../data/content/faqs';
+
+const laborBag = MOM_GROUPS[0]!;
+
+const contents = [
+  { label: 'The labor bag', href: '#labor-bag' },
+  { label: 'Comfort items', href: '#comfort' },
+  { label: 'What gets used', href: '#reality' },
+  { label: 'Documents', href: '#documents' },
+  { label: 'FAQs', href: '#faq' },
+];
+
+const reality = [
+  { item: 'Long phone charger', verdict: 'Used constantly', accent: 'bg-brand-mint' },
+  { item: 'Water bottle with a straw', verdict: 'Used constantly', accent: 'bg-brand-mint' },
+  { item: 'Warm socks', verdict: 'Used constantly', accent: 'bg-brand-mint' },
+  { item: 'Lip balm and hair ties', verdict: 'Used constantly', accent: 'bg-brand-mint' },
+  { item: 'Snacks for your partner', verdict: 'Used constantly', accent: 'bg-brand-mint' },
+  { item: 'Downloaded playlist', verdict: 'Often used', accent: 'bg-brand-butter' },
+  { item: 'Handheld fan', verdict: 'Often used', accent: 'bg-brand-butter' },
+  { item: 'Massage oil or tennis ball', verdict: 'Sometimes used', accent: 'bg-brand-coral' },
+  { item: 'Books and magazines', verdict: 'Rarely used', accent: 'bg-brand-coral' },
+  { item: 'Bluetooth speaker', verdict: 'Rarely used', accent: 'bg-brand-coral' },
+];
+---
+
+<ContentPage
+  routeKey="labor"
+  h1="Hospital Bag Checklist for Labor and Delivery"
+  lead="What to pack for labor, birth and delivery — a small bag you keep beside you in the delivery room, plus the comfort items that parents say actually made a difference."
+  groups={[laborBag, LABOR_COMFORT_GROUP, DOCUMENT_GROUP]}
+  faqs={LABOR_FAQS}
+  related={['mom', 'csection', 'dad']}
+  contents={contents}
+  ctaTitle="Pack a labor bag that makes sense"
+  ctaLead="Get a checklist split into a labor bag and a stay bag, sized for the delivery you are planning."
+>
+  <LaborKit slot="illustration" class="w-full max-w-md lg:ml-auto" />
+
+  <section id="labor-bag" class="section">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <h2>What to pack for labor</h2>
+        <p>
+          A labor bag is not a smaller version of your hospital bag. It is a different bag with a
+          different job: everything you might want <em>while you are in the delivery room</em>, and
+          nothing else.
+        </p>
+        <p>
+          Keep it small enough to carry in one hand. Space beside the bed is limited, and you do not
+          want your partner rummaging through a suitcase between contractions. The larger bag with
+          clothes, toiletries and the going-home outfit can stay in the car and come up once you have
+          been admitted and moved to a room.
+        </p>
+        <p>
+          One thing worth checking in advance: <strong>what your unit allows you to eat and drink
+          during labor</strong>. This varies between hospitals and depends on your individual
+          circumstances, so ask at an antenatal appointment rather than on the day. Pack snacks for
+          after delivery regardless — you may be very hungry at a point when the hospital kitchen is
+          closed.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-4 lg:grid-cols-2">
+        <PackGroupCard group={laborBag} index={1} />
+        <PackGroupCard group={LABOR_COMFORT_GROUP} index={2} />
+      </div>
+    </div>
+  </section>
+
+  <section id="comfort" class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Timing"
+        title="When to take which bag"
+        lead="A simple sequence that saves carrying everything through triage."
+      />
+
+      <ol class="mt-10 grid gap-4 md:grid-cols-3">
+        <li class="card p-6">
+          <span class="font-display text-3xl font-medium text-brand-coral">01</span>
+          <h3 class="mt-3 font-display text-lg font-medium text-ink">Going in</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Take the labor bag and the documents folder. Leave everything else in the car boot.
+          </p>
+        </li>
+        <li class="card p-6">
+          <span class="font-display text-3xl font-medium text-brand-lavender">02</span>
+          <h3 class="mt-3 font-display text-lg font-medium text-ink">Once admitted</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Your partner brings up the stay bag. If you are sent home again, nothing was wasted.
+          </p>
+        </li>
+        <li class="card p-6">
+          <span class="font-display text-3xl font-medium text-brand-mint">03</span>
+          <h3 class="mt-3 font-display text-lg font-medium text-ink">After birth</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            The baby bag comes up, and the car seat stays in the car until you are ready to leave.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="reality" class="section">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Reality check"
+        title="What actually gets used in the labor room"
+        lead="Based on the items parents consistently mention afterwards. If your bag is getting heavy, this is a reasonable order to cut from the bottom up."
+      />
+
+      <ul class="mt-10 grid gap-3 sm:grid-cols-2">
+        {
+          reality.map((row) => (
+            <li class="card flex items-center justify-between gap-4 p-5">
+              <span class="text-[0.9375rem] font-medium text-body-strong">{row.item}</span>
+              <span class="flex shrink-0 items-center gap-2 text-sm text-muted">
+                <span class={`h-2.5 w-2.5 rounded-full ${row.accent}`} aria-hidden="true" />
+                {row.verdict}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="mt-6 max-w-2xl text-sm text-muted">
+        Everyone&apos;s labor is different, and a &ldquo;rarely used&rdquo; item that helps you feel
+        calm is worth its space. Treat this as a guide for trimming, not a rule.
+      </p>
+    </div>
+  </section>
+
+  <section id="documents" class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="Paperwork"
+          title="Documents for the delivery room"
+          lead="Have these in one folder, in the labor bag, ready to hand over. It is the fastest part of admission if you are organised and the slowest if you are not."
+        />
+        <PackGroupCard group={DOCUMENT_GROUP} />
+      </div>
+
+      <div class="mt-16">
+        <SectionHeader
+          eyebrow="Before you pack"
+          title="Questions to ask your maternity unit"
+          lead="Two minutes on the phone can change what you pack for labor completely."
+        />
+        <div class="mt-10">
+          <HospitalQuestions limit={4} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-page">
+      <PrintableBand />
+      <p class="mt-8 text-sm text-muted">
+        Planning or preparing for a cesarean? See the
+        <a
+          href={ROUTES.csection.path}
+          class="text-link"
+          >C-section hospital bag checklist</a
+        >.
+      </p>
+    </div>
+  </section>
+</ContentPage>

@@ -1,0 +1,45 @@
+---
+import LegalPage from '../layouts/LegalPage.astro';
+import { ROUTES } from '../config/site';
+import { ABOUT_LEAD, LEGAL_UPDATED } from '../data/content/legal-pages';
+---
+
+<LegalPage routeKey="about" h1="About Us" lead={ABOUT_LEAD} updated={LEGAL_UPDATED}>
+  <h2>What we do</h2>
+  <p>
+    Hospital Bag Checklist is a free resource for parents preparing for birth. We publish practical
+    packing guides for mom, baby and dad, plus a personalised checklist tool that adapts to your
+    delivery plan, hospital stay and who you are packing for.
+  </p>
+  <p>
+    Our goal is simple: reduce the mental load in the last weeks of pregnancy. You should spend less
+    time guessing what belongs in your bag and more time resting before the big day.
+  </p>
+
+  <h2>How our content is written</h2>
+  <p>
+    Our checklists are based on common hospital packing advice, feedback from parents, and what
+    people actually use during labor and recovery. Every hospital is different — what one unit
+    provides for free, another may ask you to bring — so we always recommend confirming details
+    with your midwife, doctor or maternity unit.
+  </p>
+  <p>
+    We update guides when we find clearer ways to explain packing or when hospital practices
+    change. If you spot something outdated, please <a href={ROUTES.contact.path}>let us know</a>.
+  </p>
+
+  <h2>Not medical advice</h2>
+  <p>
+    This site is for general information only. It is not a substitute for professional medical
+    advice, diagnosis or treatment. Always follow the guidance of your healthcare team.
+  </p>
+
+  <h2>Explore the checklists</h2>
+  <ul>
+    <li><a href={ROUTES.mom.path}>Hospital bag checklist for mom</a></li>
+    <li><a href={ROUTES.baby.path}>Baby hospital bag checklist</a></li>
+    <li><a href={ROUTES.dad.path}>Hospital bag checklist for dad</a></li>
+    <li><a href={ROUTES.pregnancy.path}>When to pack your hospital bag</a></li>
+    <li><a href={ROUTES.generator.path}>Create your personalised checklist</a></li>
+  </ul>
+</LegalPage>

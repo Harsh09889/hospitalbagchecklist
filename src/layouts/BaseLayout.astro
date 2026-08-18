@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+import Seo from '../components/seo/Seo.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import GoogleAnalytics from '../components/analytics/GoogleAnalytics.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path with no trailing slash. */
+  path: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  keywords?: string[];
+  jsonLd?: string;
+  /** Applied to <main>; use for full-bleed pages that manage their own spacing. */
+  mainClass?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  ogType = 'website',
+  noindex = false,
+  keywords,
+  jsonLd,
+  mainClass = '',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f5ee" />
+
+    <GoogleAnalytics />
+
+    <script is:inline>
+      (function () {
+        var key = 'theme';
+        var stored = localStorage.getItem(key);
+        var dark =
+          stored === 'dark' ||
+          (stored !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = dark ? '#1a1916' : '#f7f5ee';
+      })();
+    </script>
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Bag List" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <link
+      rel="preload"
+      href="/fonts/outfit-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <Seo
+      title={title}
+      description={description}
+      path={path}
+      ogType={ogType}
+      noindex={noindex}
+      keywords={keywords}
+      jsonLd={jsonLd}
+    />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <Header currentPath={path} />
+    <main id="main-content" class={`flex-1 ${mainClass}`}>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

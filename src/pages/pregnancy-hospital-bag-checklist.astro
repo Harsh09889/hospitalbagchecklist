@@ -1,0 +1,174 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import SectionHeader from '../components/marketing/SectionHeader.astro';
+import PackingTimeline from '../components/marketing/PackingTimeline.astro';
+import HospitalQuestions from '../components/marketing/HospitalQuestions.astro';
+import OverpackCompare from '../components/marketing/OverpackCompare.astro';
+import PrintableBand from '../components/marketing/PrintableBand.astro';
+import HospitalKit from '../components/illustrations/HospitalKit.astro';
+import { ROUTES } from '../config/site';
+import { PACKING_TIMELINE } from '../data/content/checklists';
+import { PREGNANCY_FAQS } from '../data/content/faqs';
+
+const contents = [
+  { label: 'When to pack', href: '#when' },
+  { label: 'What to buy first', href: '#buy-first' },
+  { label: 'Ask your hospital', href: '#hospital' },
+  { label: 'Avoid overpacking', href: '#overpacking' },
+  { label: 'FAQs', href: '#faq' },
+];
+
+const buyFirst = [
+  {
+    when: 'Buy early',
+    body: 'Things you cannot borrow or improvise, and that need fitting or washing before use.',
+    items: ['Infant car seat', 'Nursing bras', 'Newborn clothes', 'Maternity pads'],
+    accent: 'bg-brand-coral text-on-coral',
+  },
+  {
+    when: 'Buy mid-way',
+    body: 'Items you will want in reasonable quantity but that do not need trying on.',
+    items: ['Muslin cloths', 'Swaddles', 'High-waisted underwear', 'Breast pads'],
+    accent: 'bg-brand-lavender text-on-lavender',
+  },
+  {
+    when: 'Buy last',
+    body: 'Anything perishable or that you might raid from the bag before the day arrives.',
+    items: ['Snacks', 'Toiletries', 'Spare charging cable', 'Dry shampoo'],
+    accent: 'bg-brand-sky text-on-sky',
+  },
+];
+---
+
+<ContentPage
+  routeKey="pregnancy"
+  h1="Pregnancy Hospital Bag Checklist"
+  lead="When should you pack your hospital bag, and what should you buy first? A simple week-by-week plan that gets your bag ready without turning the third trimester into a shopping project."
+  faqs={PREGNANCY_FAQS}
+  related={['mom', 'labor', 'pdf']}
+  contents={contents}
+  ctaTitle="Get ahead of the big day"
+  ctaLead="Build your checklist now, tick things off as you buy them, and know the bag is genuinely ready."
+>
+  <HospitalKit slot="illustration" class="w-full max-w-md lg:ml-auto" />
+
+  <section id="when" class="section">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <h2>When should you pack your hospital bag?</h2>
+        <p>
+          There is no single perfect week for everyone. Common guidance suggests having your bag ready
+          a few weeks before your due date — the NHS points to around three weeks ahead, and many
+          parents and pregnancy guides aim for roughly <strong>36 weeks</strong>.
+        </p>
+        <p>
+          The reason to be early is simple: babies do not read calendars. Around one in ten babies
+          arrives before 37 weeks, and having a bag half-packed is much less stressful than starting
+          from nothing. If you are expecting twins, or your care team has told you that you may
+          deliver early, bring the whole timeline forward by a few weeks.
+        </p>
+        <p>
+          Your doctor, midwife or maternity unit may have their own recommendation for your
+          circumstances, and theirs should win over any general guide, including this one.
+        </p>
+      </div>
+
+      <div class="mt-14">
+        <PackingTimeline />
+      </div>
+
+      <div class="prose-clay mx-auto mt-14 max-w-[45rem]">
+        <h3>A weekly two-minute check</h3>
+        <p>
+          Once the bag is packed, it quietly stops being ready. Snacks get eaten, charging cables get
+          borrowed, and paperwork gets taken out for appointments and never goes back. Every week or
+          so, check three things: <strong>snacks, chargers and documents</strong>. That is the whole
+          routine.
+        </p>
+        <p>
+          Keep the bag somewhere you can grab without thinking — by the door, at the bottom of the
+          stairs, or in the car. And make sure your partner can find it without calling you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="buy-first" class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Shopping order"
+        title="What to buy first"
+        lead="Buying in this order spreads the cost and means the items that need fitting, washing or practising are handled well before you need them."
+      />
+
+      <ul class="mt-10 grid gap-4 md:grid-cols-3">
+        {
+          buyFirst.map((stage) => (
+            <li class={`card-feature reveal flex flex-col ${stage.accent}`}>
+              <span class="text-xs font-semibold uppercase tracking-[0.14em] opacity-75">
+                {stage.when}
+              </span>
+              <p class="mt-4 flex-1 leading-relaxed opacity-90">{stage.body}</p>
+              <ul class="mt-6 space-y-2 border-t border-current/15 pt-5 text-[0.9375rem] font-medium">
+                {stage.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="mt-8 max-w-2xl text-sm text-muted">
+        Working from a full list instead? Start with the
+        <a
+          href={ROUTES.mom.path}
+          class="text-link"
+          >checklist for mom</a
+        >
+        and the
+        <a
+          href={ROUTES.baby.path}
+          class="text-link"
+          >baby checklist</a
+        >, then use the timeline above to decide when to buy each part.
+      </p>
+    </div>
+  </section>
+
+  <section id="hospital" class="section">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Before you shop"
+        title="Ask your hospital these questions"
+        lead="Ask at an antenatal appointment, ideally before you start buying. Hospitals differ enormously in what they supply, and the answers can remove several items from your shopping list entirely."
+      />
+      <div class="mt-10">
+        <HospitalQuestions />
+      </div>
+    </div>
+  </section>
+
+  <section id="overpacking" class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Keep it light"
+        title="How to avoid overpacking"
+        lead="The most common regret is not forgetting something — it is carrying two heavy bags of things that never came out. Pack for the stay, not for every possible scenario."
+        align="center"
+      />
+      <div class="mt-12">
+        <OverpackCompare />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-page">
+      <PrintableBand />
+      <p class="mt-8 text-sm text-muted">
+        {`Currently at ${PACKING_TIMELINE[0]!.week} or earlier? Start with the list, not the shopping.`}
+      </p>
+    </div>
+  </section>
+</ContentPage>

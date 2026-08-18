@@ -1,0 +1,168 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import SectionHeader from '../components/marketing/SectionHeader.astro';
+import PackGroupCard from '../components/marketing/PackGroupCard.astro';
+import PrintableBand from '../components/marketing/PrintableBand.astro';
+import CSectionKit from '../components/illustrations/CSectionKit.astro';
+import { MEDICAL_DISCLAIMER, ROUTES } from '../config/site';
+import { CSECTION_GROUP, MOM_GROUPS, DOCUMENT_GROUP } from '../data/content/checklists';
+import { CSECTION_FAQS } from '../data/content/faqs';
+
+const contents = [
+  { label: 'What changes', href: '#what-changes' },
+  { label: 'Extras to pack', href: '#extras' },
+  { label: 'The base checklist', href: '#base' },
+  { label: 'Questions for your team', href: '#questions' },
+  { label: 'FAQs', href: '#faq' },
+];
+
+const differences = [
+  {
+    title: 'Clothing that avoids the incision',
+    body: 'High-waisted, loose and soft. The waistband should sit well above the incision rather than across it, which rules out most regular underwear and anything with a low or tight waist.',
+    accent: 'bg-brand-mint text-on-mint',
+  },
+  {
+    title: 'A slightly longer stay',
+    body: 'Cesarean stays are commonly longer than after a vaginal birth. Pack an extra day or two of clothing rather than doubling everything — your hospital can tell you what to expect.',
+    accent: 'bg-brand-sky text-on-sky',
+  },
+  {
+    title: 'Things within easy reach',
+    body: 'Bending, stretching and reaching are harder in the first days. Slip-on shoes, a long charging cable and a small bag you can keep on the bed all make a real difference.',
+    accent: 'bg-brand-butter text-on-butter',
+  },
+  {
+    title: 'More help than you expect to need',
+    body: 'You may need support standing up, moving around and lifting your baby at first. Knowing that in advance is part of packing — a dressing gown for supported walks is genuinely useful.',
+    accent: 'bg-brand-lavender text-on-lavender',
+  },
+];
+
+const teamQuestions = [
+  'What time should I arrive, and are there fasting instructions?',
+  'How long should I expect to stay in hospital?',
+  'What can I bring into theatre with me?',
+  'Can my partner stay overnight on the ward?',
+  'What support will I have with feeding and moving around?',
+  'What should I expect in the first few days of recovery?',
+];
+---
+
+<ContentPage
+  routeKey="csection"
+  h1="C-Section Hospital Bag Checklist"
+  lead="A cesarean bag is mostly the same as any other hospital bag, with two practical differences: clothing that avoids your incision, and enough for a slightly longer stay. Here is what to add, whether your C-section is planned or a possibility."
+  groups={[CSECTION_GROUP, DOCUMENT_GROUP]}
+  faqs={CSECTION_FAQS}
+  related={['mom', 'labor', 'baby']}
+  contents={contents}
+  ctaTitle="Build a bag for your delivery plan"
+  ctaLead="Tell us you are planning or preparing for a cesarean and we will adjust quantities and add the extras automatically."
+>
+  <CSectionKit slot="illustration" class="w-full max-w-md lg:ml-auto" />
+
+  <section id="what-changes" class="section">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <h2>What actually changes for a C-section</h2>
+        <p>
+          Less than most lists imply. You still need documents, toiletries, comfortable clothes and
+          everything for your baby. The differences are practical rather than dramatic, and they come
+          down to <strong>where your clothes sit</strong> and <strong>how long you stay</strong>.
+        </p>
+        <p>
+          This page deliberately sticks to packing. A cesarean is abdominal surgery, and questions
+          about recovery, pain relief, movement and healing should go to your doctor or midwife, who
+          know your circumstances. What we can help with is making sure you are not sending someone
+          home for high-waisted underwear on day two.
+        </p>
+      </div>
+
+      <ul class="mt-14 grid gap-4 sm:grid-cols-2">
+        {
+          differences.map((difference) => (
+            <li class={`card-feature reveal ${difference.accent}`}>
+              <h3 class="font-display text-xl font-medium">{difference.title}</h3>
+              <p class="mt-3 leading-relaxed opacity-90">{difference.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="extras" class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="Add these"
+          title="Extras worth packing"
+          lead="Add these to a standard hospital bag. If your cesarean is unplanned or a possibility rather than a plan, the first two items are the ones worth having in the bag regardless."
+        />
+        <PackGroupCard group={CSECTION_GROUP} />
+      </div>
+    </div>
+  </section>
+
+  <section id="base" class="section">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="The base list"
+        title="Everything else stays the same"
+        lead="Start from the standard mom checklist and layer the extras on top. Nothing here needs removing because of a cesarean."
+      />
+
+      <div class="mt-10 grid gap-4 lg:grid-cols-3">
+        {MOM_GROUPS.map((group, index) => (
+          <PackGroupCard group={group} index={index + 1} limit={6} moreHref={ROUTES.mom.path} />
+        ))}
+      </div>
+
+      <a href={ROUTES.mom.path} class="btn-secondary mt-8">
+        See the full checklist for mom
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="questions" class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:gap-16">
+        <SectionHeader
+          eyebrow="Ask your team"
+          title="Questions for your doctor or midwife"
+          lead="Write these down and take them to your next appointment. The answers change what you pack more than any checklist can."
+        />
+
+        <ul class="grid gap-3">
+          {
+            teamQuestions.map((question) => (
+              <li class="card flex gap-3.5 p-5">
+                <span
+                  class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-mint/30 font-display text-sm font-semibold text-on-mint"
+                  aria-hidden="true"
+                >
+                  ?
+                </span>
+                <span class="text-[0.9375rem] font-medium leading-snug text-ink">{question}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="card mt-14 border-brand-coral/40 p-6">
+        <p class="text-sm leading-relaxed text-body">
+          <strong class="font-semibold text-ink">A note on medical advice.</strong> {MEDICAL_DISCLAIMER}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-page">
+      <PrintableBand />
+    </div>
+  </section>
+</ContentPage>

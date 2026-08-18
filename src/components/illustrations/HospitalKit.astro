@@ -1,0 +1,71 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const uid = 'hospital';
+---
+
+<svg
+  viewBox="0 0 400 300"
+  fill="none"
+  role="img"
+  aria-label="A small clay hospital building with a packed bag waiting outside"
+  class={className}
+>
+  <defs>
+    <linearGradient id={`${uid}-wall`} x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#fffdf8" />
+      <stop offset="1" stop-color="#e4dece" />
+    </linearGradient>
+    <linearGradient id={`${uid}-roof`} x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#b8dcf1" />
+      <stop offset="1" stop-color="#75a9cd" />
+    </linearGradient>
+    <linearGradient id={`${uid}-bag`} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#f9b3a3" />
+      <stop offset="1" stop-color="#e07b62" />
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="200" cy="268" rx="162" ry="22" fill="#1c1b18" opacity="0.06" />
+
+  <!-- Building -->
+  <g>
+    <rect x="96" y="96" width="208" height="152" rx="32" fill={`url(#${uid}-wall)`} />
+    <rect x="96" y="96" width="208" height="42" rx="21" fill={`url(#${uid}-roof)`} />
+
+    <!-- Cross -->
+    <rect x="186" y="56" width="28" height="34" rx="10" fill="#f4907c" />
+    <rect x="172" y="66" width="56" height="14" rx="7" fill="#f4907c" />
+
+    <!-- Windows -->
+    <rect x="122" y="156" width="42" height="38" rx="14" fill="#9ecbe8" />
+    <rect x="180" y="156" width="42" height="38" rx="14" fill="#8fd3bd" />
+    <rect x="238" y="156" width="42" height="38" rx="14" fill="#f7cf72" />
+
+    <!-- Door -->
+    <rect x="168" y="208" width="64" height="40" rx="16" fill="#b9a8e8" />
+    <circle cx="216" cy="230" r="5" fill="#fffdf8" opacity="0.8" />
+  </g>
+
+  <!-- Waiting bag -->
+  <g>
+    <rect x="298" y="196" width="82" height="52" rx="22" fill={`url(#${uid}-bag)`} />
+    <path
+      d="M326 196c0-10 8-17 17-17s17 7 17 17"
+      stroke="#c95b45"
+      stroke-width="9"
+      stroke-linecap="round"
+      fill="none"
+    />
+    <rect x="312" y="214" width="54" height="14" rx="7" fill="#fffdf8" opacity="0.5" />
+  </g>
+
+  <!-- Shrubs -->
+  <circle cx="62" cy="234" r="22" fill="#b7cf9a" />
+  <circle cx="86" cy="242" r="14" fill="#9dbb7f" />
+
+  <circle cx="52" cy="118" r="13" fill="#f7cf72" opacity="0.9" />
+</svg>

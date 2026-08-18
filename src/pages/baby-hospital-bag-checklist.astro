@@ -1,0 +1,191 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import SectionHeader from '../components/marketing/SectionHeader.astro';
+import PackGroupCard from '../components/marketing/PackGroupCard.astro';
+import PrintableBand from '../components/marketing/PrintableBand.astro';
+import BabyKit from '../components/illustrations/BabyKit.astro';
+import { ROUTES } from '../config/site';
+import { BABY_GROUPS } from '../data/content/checklists';
+import { BABY_FAQS } from '../data/content/faqs';
+
+const contents = [
+  { label: 'What baby needs', href: '#what-to-pack' },
+  { label: 'How much is enough', href: '#how-much' },
+  { label: 'What the hospital may provide', href: '#provided' },
+  { label: 'Going home', href: '#going-home' },
+  { label: 'FAQs', href: '#faq' },
+];
+
+const provided = [
+  { item: 'Diapers and wipes', likely: 'Often provided', accent: 'bg-brand-mint' },
+  { item: 'Baby clothes for the stay', likely: 'Sometimes provided', accent: 'bg-brand-butter' },
+  { item: 'Blankets and bedding', likely: 'Usually provided', accent: 'bg-brand-mint' },
+  { item: 'Formula and sterile bottles', likely: 'Varies widely', accent: 'bg-brand-butter' },
+  { item: 'Going-home outfit', likely: 'Bring your own', accent: 'bg-brand-coral' },
+  { item: 'Car seat', likely: 'Bring your own', accent: 'bg-brand-coral' },
+];
+---
+
+<ContentPage
+  routeKey="baby"
+  h1="Baby Hospital Bag Checklist"
+  lead="Your baby needs far less than most lists suggest. This newborn hospital bag checklist covers clothes, diapers and care items, and the one thing you genuinely cannot leave without — an approved car seat."
+  groups={BABY_GROUPS}
+  faqs={BABY_FAQS}
+  related={['mom', 'momAndBaby', 'pdf']}
+  contents={contents}
+  ctaTitle="Not sure how much to pack?"
+  ctaLead="Tell us how long you expect to stay and we will suggest quantities for every baby item on the list."
+>
+  <BabyKit slot="illustration" class="w-full max-w-md lg:ml-auto" />
+
+  <section id="what-to-pack" class="section">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <h2>What does a baby need in the hospital?</h2>
+        <p>
+          Three things, really: something soft to wear, something to clean them up with, and a safe
+          way to get home. Everything beyond that is either optional or supplied by the ward.
+        </p>
+        <p>
+          The most common mistake is packing like you are going on holiday. Newborns spend almost
+          all of their first days being held, fed and asleep. They do not need outfit changes for
+          different occasions — they need a small number of easy, comfortable layers you can change
+          quickly at 4am in a dim room.
+        </p>
+        <p>
+          If you only remember one packing tip, make it this: choose
+          <strong>envelope-neck bodysuits</strong> and <strong>sleepsuits with built-in feet</strong>.
+          Envelope necks pull down over the shoulders rather than over the head, which matters more
+          than you would expect. Built-in feet mean you can skip socks entirely.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-4 lg:grid-cols-3">
+        {BABY_GROUPS.map((group, index) => <PackGroupCard group={group} index={index + 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="how-much" class="section bg-surface-soft">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Quantities"
+        title="How many clothes should you pack?"
+        lead="For a typical one to three night stay, this is roughly what parents actually get through."
+      />
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-3">
+        <div class="card p-6">
+          <p class="font-display text-4xl font-medium text-ink">3–5</p>
+          <p class="mt-2 font-display text-lg font-medium text-ink">Bodysuits</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Assume at least one change a day, plus one or two unplanned ones. Envelope necks, newborn
+            size, with one in the next size up.
+          </p>
+        </div>
+        <div class="card p-6">
+          <p class="font-display text-4xl font-medium text-ink">3–5</p>
+          <p class="mt-2 font-display text-lg font-medium text-ink">Sleepsuits</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Worn over a bodysuit or on their own depending on the temperature of the ward. Built-in
+            feet save you packing socks.
+          </p>
+        </div>
+        <div class="card p-6">
+          <p class="font-display text-4xl font-medium text-ink">2–4</p>
+          <p class="mt-2 font-display text-lg font-medium text-ink">Muslin cloths</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            The item parents consistently say they used most. Burp cloth, feeding cover, clean
+            surface and light layer, all in one.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose-clay mx-auto mt-14 max-w-[45rem]">
+        <h3>Should you wash baby clothes first?</h3>
+        <p>
+          Most parents wash and dry everything before it goes in the bag, using a gentle
+          non-biological detergent and skipping fabric softener. It removes any residue from storage
+          or shipping and means the clothes are soft and ready to wear straight out of the bag.
+        </p>
+        <p>
+          Pack them in a single clear pouch or bag rather than loose. When you are half asleep and
+          need a clean sleepsuit, you will be glad you did not have to excavate the whole bag.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="provided" class="section">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Ask first"
+        title="What your hospital may already provide"
+        lead="This varies more than any other part of the list, and it is the single easiest way to avoid overpacking. Call your maternity unit and ask before you buy anything bulky."
+      />
+
+      <ul class="mt-10 grid gap-3 sm:grid-cols-2">
+        {
+          provided.map((row) => (
+            <li class="card flex items-center justify-between gap-4 p-5">
+              <span class="text-[0.9375rem] font-medium text-body-strong">{row.item}</span>
+              <span class="flex shrink-0 items-center gap-2 text-sm text-muted">
+                <span class={`h-2.5 w-2.5 rounded-full ${row.accent}`} aria-hidden="true" />
+                {row.likely}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="mt-6 max-w-2xl text-sm text-muted">
+        These are general patterns, not guarantees. Your hospital&apos;s own guidance always wins.
+      </p>
+    </div>
+  </section>
+
+  <section id="going-home" class="section bg-surface-soft">
+    <div class="container-page">
+      <div class="prose-clay mx-auto max-w-[45rem]">
+        <h2>Getting your baby home safely</h2>
+        <p>
+          The car seat is the one item on this entire checklist that you truly cannot substitute or
+          borrow on the day. If you are travelling home by car, most hospitals will expect you to
+          have an approved infant seat, and some will not discharge you without one.
+        </p>
+        <p>
+          Fit it and practise with it well before your due date, not in the hospital car park with a
+          newborn in your arms. Two things worth knowing: thick coats and padded snowsuits should
+          not go underneath the harness, and a blanket belongs tucked over the straps rather than
+          behind your baby&apos;s back.
+        </p>
+        <p>
+          Pack one going-home outfit in newborn size and one in the next size up. Birth weight is
+          hard to predict, and having both means the first photo outside the hospital is a nice
+          moment rather than a wrestling match.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-page">
+      <PrintableBand />
+      <p class="mt-8 text-sm text-muted">
+        Also packing for yourself? See the
+        <a
+          href={ROUTES.mom.path}
+          class="text-link"
+          >hospital bag checklist for mom</a
+        >
+        and the
+        <a
+          href={ROUTES.dad.path}
+          class="text-link"
+          >checklist for dad and birth partners</a
+        >.
+      </p>
+    </div>
+  </section>
+</ContentPage>
